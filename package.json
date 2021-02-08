@@ -1,11 +1,12 @@
 {
-  "name": "service-template-node",
-  "version": "0.8.0",
-  "description": "A blueprint for MediaWiki REST API services",
+  "name": "image-suggestion-api",
+  "private": "true",
+  "version": "1.0.0",
+  "description": "REST API for retrieving image suggestions",
   "main": "./app.js",
   "scripts": {
     "start": "service-runner",
-    "test": "npm run lint && PREQ_CONNECT_TIMEOUT=15 mocha",
+    "test": "npm run lint && PREQ_CONNECT_TIMEOUT=15 mocha --exit",
     "lint": "eslint --max-warnings 0 --ext .js --ext .json .",
     "lint:fix": "eslint --fix .",
     "docker-start": "service-runner docker-start",
@@ -14,9 +15,9 @@
     "coverage": "PREQ_CONNECT_TIMEOUT=15 nyc --reporter=lcov _mocha"
   },
   "repository": {
-    "type": "git",
-    "url": "git://github.com/wikimedia/service-template-node.git"
-  },
+		"type": "git",
+		"url": "https://gerrit.wikimedia.org/g/mediawiki/services/image-suggestion-api"
+	},
   "keywords": [
     "REST",
     "API",
@@ -56,12 +57,5 @@
     "mocha.parallel": "^0.15.6",
     "nyc": "^14.1.1",
     "openapi-schema-validator": "^3.0.3"
-  },
-  "deploy": {
-    "target": "debian",
-    "node": "10.15.2",
-    "dependencies": {
-      "_all": []
-    }
   }
 }

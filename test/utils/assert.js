@@ -83,10 +83,12 @@ function fails(promise, onRejected) {
 
 }
 
-module.exports.ok             = assert.ok;
-module.exports.fails          = fails;
-module.exports.deepEqual      = deepEqual;
-module.exports.isDeepEqual    = isDeepEqual;
-module.exports.notDeepEqual   = notDeepEqual;
-module.exports.contentType    = contentType;
-module.exports.status         = status;
+module.exports = {
+    ok: assert.ok,
+    fails,
+    deepEqual,
+    isDeepEqual,
+    notDeepEqual,
+    contentType,
+    status
+};

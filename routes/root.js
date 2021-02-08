@@ -40,6 +40,22 @@ router.get('/', (req, res, next) => {
 
 });
 
+/**
+ * GET /image-suggestions/v0/{lang}/{wiki}/pages/{title}
+ * Gets image suggestions for an individual page
+ */
+router.get('/image-suggestions/v0/:lang/:wiki/pages/:title', (req, res, next) => {
+    res.json({ woot: 'woot' });
+});
+
+/**
+ * GET /image-suggestions/v0/{lang}/{wiki}/pages
+ * Gets under-illustrated pages and their image suggestions
+ */
+router.get('/image-suggestions/v0/:lang/:wiki/pages', (req, res, next) => {
+    res.json({ woo: 'hoo' });
+});
+
 module.exports = (appObj) => {
 
     app = appObj;
