@@ -1,7 +1,7 @@
 {
   "name": "image-suggestion-api",
   "private": "true",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "REST API for retrieving image suggestions",
   "main": "./app.js",
   "scripts": {
@@ -18,19 +18,9 @@
 		"type": "git",
 		"url": "https://gerrit.wikimedia.org/g/mediawiki/services/image-suggestion-api"
 	},
-  "keywords": [
-    "REST",
-    "API",
-    "service template",
-    "MediaWiki"
-  ],
-  "author": "Wikimedia Service Team <services@lists.wikimedia.org>",
+  "author": "Wikimedia Platform Engineering Team <core-platform-team@wikimedia.org>",
   "contributors": [],
   "license": "Apache-2.0",
-  "bugs": {
-    "url": "https://phabricator.wikimedia.org/tag/service-template-node/"
-  },
-  "homepage": "https://github.com/wikimedia/service-template-node",
   "dependencies": {
     "bluebird": "^3.5.5",
     "body-parser": "^1.19.0",

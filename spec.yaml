@@ -13,7 +13,38 @@ info:
     domain: api.wikimedia.org
 
 paths:
-  # from routes/root.js
+  # from routes/info.js
+  /_info:
+    get:
+      tags:
+        - Service information
+      description: Gets information about the service
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  version:
+                    type: string
+                  description:
+                    type: string
+      x-amples:
+        - title: retrieve service info
+          request: {}
+          response:
+            status: 200
+            headers:
+              content-type: application/json
+            body:
+              name: /.+/
+              description: /.+/
+              version: /.+/
+  # from routes/image-suggestions.js
   /image-suggestions/v0/{lang}/{wiki}/pages:
     get:
       tags:
