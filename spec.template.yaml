@@ -127,8 +127,8 @@ components:
           type: string
         source:
           type: string
-        confidence_score:
-          type: number
+        confidence_rating:
+          type: string
   parameters:
     domain:
       in: path
