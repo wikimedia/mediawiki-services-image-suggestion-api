@@ -5,12 +5,7 @@
   "plugins": ["json", "jsdoc"],
   "rules": {
     "array-bracket-spacing": "off",
-    "camelcase": [
-      "error",
-      {
-        "properties": "never"
-      }
-    ],
+    "camelcase": "off",
     "computed-property-spacing": "off",
     "indent": ["off", 4],
     "jsdoc/no-undefined-types": "off",

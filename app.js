@@ -123,7 +123,11 @@ function initApp(options) {
     // use the application/x-www-form-urlencoded parser
     app.use(bodyParser.urlencoded({ extended: true }));
 
-    algoResults.initAlgoResultsSync();
+    // TODO: This is so bad/ugly, find better way to load data when testing
+    // TODO: Please dont forget to fix me. please.
+    if (process.env.TEST_MODE === undefined) {
+        algoResults.initAlgoResultsSync();
+    }
 
     return BBPromise.resolve(app);
 

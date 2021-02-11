@@ -6,7 +6,7 @@
   "main": "./app.js",
   "scripts": {
     "start": "service-runner",
-    "test": "npm run generate-fixtures && npm run lint && PREQ_CONNECT_TIMEOUT=15 mocha --exit",
+    "test": "npm run generate-fixtures && npm run lint && PREQ_CONNECT_TIMEOUT=15 TEST_MODE=true mocha --exit",
     "lint": "eslint --max-warnings 0 --ext .js --ext .json .",
     "lint:fix": "eslint --fix .",
     "generate-fixtures": "node ./test/utils/generateFixtures.js",
@@ -16,9 +16,9 @@
     "coverage": "PREQ_CONNECT_TIMEOUT=15 nyc --reporter=lcov _mocha"
   },
   "repository": {
-		"type": "git",
-		"url": "https://gerrit.wikimedia.org/g/mediawiki/services/image-suggestion-api"
-	},
+    "type": "git",
+    "url": "https://gerrit.wikimedia.org/g/mediawiki/services/image-suggestion-api"
+  },
   "author": "Wikimedia Platform Engineering Team <core-platform-team@wikimedia.org>",
   "contributors": [],
   "license": "Apache-2.0",
@@ -39,6 +39,7 @@
   },
   "devDependencies": {
     "ajv": "^6.5.4",
+    "chai": "^4.3.0",
     "eslint-config-wikimedia": "^0.17.0",
     "eslint-plugin-jsdoc": "^30.6.2",
     "eslint-plugin-json": "^2.1.2",

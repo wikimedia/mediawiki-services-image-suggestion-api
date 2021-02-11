@@ -1,7 +1,7 @@
 'use strict';
 
 const sUtil = require('../lib/util');
-const algoResults = require('../lib/algoResults');
+const suggestions = require('../lib/image-suggestions.js');
 
 /**
  * The main router object
@@ -26,15 +26,10 @@ router.get('/:lang/:wiki/suggestions/:title', (req, res, next) => {
  * Gets under-illustrated pages and their image suggestions
  */
 router.get('/:lang/:wiki/pages', (req, res, next) => {
-    // @todo: run this through a controller instead. Once that is done,
-    //   we may not need to require algoResults in this module.
-    algoResults.getAlgoResults(req.params)
-    .then(function (data) {
-        res.json(data);
-    })
-    .catch((err) => {
-        res.json(err);
+    suggestions.getPages(req.params).then((response) => {
+        res.json(response);
     });
+    // TODO: Error Handling
 });
 
 module.exports = (appObj) => {
