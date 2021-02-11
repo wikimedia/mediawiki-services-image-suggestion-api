@@ -1,83 +1,71 @@
-# service-template-node [![Build Status](https://travis-ci.org/wikimedia/service-template-node.svg?branch=master)](https://travis-ci.org/wikimedia/service-template-node)
+# Image Suggestion API 
 
-Template for creating MediaWiki Services in Node.js
+A Node.js REST API for retrieving image suggestions for under-illustrated Wikipedia articles. 
 
-## Getting Started
+## Quick Start
 
-### Installation
-
-First, clone the repository
+First, install all npm dependencies
 
 ```
-git clone https://github.com/wikimedia/service-template-node.git
-```
-
-Install the dependencies
-
-```
-cd service-template-node
 npm install
 ```
 
-You are now ready to get to work!
-
-* Inspect/modify/configure `app.js`
-* Add routes by placing files in `routes/` (look at the files there for examples)
-
-You can also read [the documentation](https://www.mediawiki.org/wiki/ServiceTemplateNode).
-
-### Running the examples
-
-The template is a fully-working example, so you may try it right away. To
-start the server hosting the REST API, simply run (inside the repo's directory)
+To start up the server, simply run:
 
 ```
 npm start
 ```
 
-This starts an HTTP server listening on `localhost:6927`. There are several
-routes you may query (with a browser, or `curl` and friends):
+This starts an HTTP server listening on `localhost:8000`. There are several
+routes you may query:
 
-* `http://localhost:6927/_info/`
-* `http://localhost:6927/_info/name`
-* `http://localhost:6927/_info/version`
-* `http://localhost:6927/_info/home`
-* `http://localhost:6927/{domain}/v1/siteinfo{/prop}`
-* `http://localhost:6927/{domain}/v1/page/{title}`
-* `http://localhost:6927/{domain}/v1/page/{title}/lead`
-* `http://localhost:6927/ex/err/array`
-* `http://localhost:6927/ex/err/file`
-* `http://localhost:6927/ex/err/manual/error`
-* `http://localhost:6927/ex/err/manual/deny`
-* `http://localhost:6927/ex/err/auth`
+* `http://localhost:8000?doc`
+* `http://localhost:8000?spec`
+* `http://localhost:8000/_info/`
+* `http://localhost:8000/image-suggestions/v0/{lang}/{wiki}/pages:`
+* `http://localhost:8000/image-suggestions/v0/{lang}/{wiki}/pages/{title}:`
 
 ### Tests
 
-The template also includes a test suite a small set of executable tests. To fire
-them up, simply run:
+Tests are written using the [mocha](https://mochajs.org/) framework. To run, simply execute:
 
 ```
 npm test
 ```
 
-If you haven't changed anything in the code (and you have a working Internet
-connection), you should see all the tests passing. As testing most of the code
-is an important aspect of service development, there is also a bundled tool
-reporting the percentage of code covered. Start it with:
+To measure test coverage, we use the npm package [nyc](https://www.npmjs.com/package/nyc). To see how much test coverage you have, simply execute the command below and your test coverage results will be viewable by loading `./coverage/lcov-report/index.html` in your browser.
 
 ```
 npm run-script coverage
 ```
 
-### Troubleshooting
+### Deployments
 
-In a lot of cases when there is an issue with node it helps to recreate the
-`node_modules` directory:
+The API is publicly accessible at image-suggestion-api.toolforge.org. To deploy new versions of the API to the toolforge instance:
 
-```
-rm -r node_modules
-npm install
-```
+1. Request to become a maintainer for `image-suggestion-api` on `toolsadmin.wikimedia.org`.
+2. Login to the toolforge instance and become the tool account
+	```
+	ssh login.toolforge.org
+	```
+	```
+	become image-suggestion-api
+	```
 
-Enjoy!
+3. Pull the latest code:
+	```
+	cd /www/js/
+	```
+	```
+	git pull
+	```
+
+4. Restart the service
+	```
+	webservice --backend=kubernetes node10 restart
+	```
+
+### API Documentation
+
+The API documentation adheres to [OpenAPI](https://swagger.io/specification/) standards and lives in `spec.yaml`. It is viewable at `https://image-suggestion-api.toolforge.org/?doc`.
 
