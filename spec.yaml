@@ -92,7 +92,7 @@ paths:
             status: 200
             headers:
               content-type: application/json
-  /image-suggestions/v0/{lang}/{wiki}/pages/{title}:
+  /image-suggestions/v0/{lang}/{wiki}/suggestions/{title}:
     get:
       tags:
         - Page Image Suggestions

@@ -16,7 +16,7 @@ let app;
  * GET /image-suggestions/v0/{lang}/{wiki}/pages/{title}
  * Gets image suggestions for an individual page
  */
-router.get('/:lang/:wiki/pages/:title', (req, res, next) => {
+router.get('/:lang/:wiki/suggestions/:title', (req, res, next) => {
     res.json({ woot: 'woot' });
 });
 
