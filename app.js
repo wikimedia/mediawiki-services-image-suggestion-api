@@ -11,6 +11,7 @@ const packageInfo = require('./package.json');
 const yaml = require('js-yaml');
 const addShutdown = require('http-shutdown');
 const path = require('path');
+const algoResults = require('./lib/algoResults.js');
 
 /**
  * Creates an express app and initialises it
@@ -121,6 +122,8 @@ function initApp(options) {
     app.use(bodyParser.json({ limit: app.conf.max_body_size || '100kb' }));
     // use the application/x-www-form-urlencoded parser
     app.use(bodyParser.urlencoded({ extended: true }));
+
+    algoResults.initAlgoResultsSync();
 
     return BBPromise.resolve(app);
 

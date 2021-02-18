@@ -85,7 +85,7 @@ paths:
         - title: Gets image suggestions for multiple under-illustrated pages
           request:
             params:
-              lang: en
+              lang: ar
               wiki: wikipedia
               title: frogs
           response:
@@ -135,7 +135,7 @@ paths:
         - title: Successfully gets images for a specified page
           request:
             params:
-              lang: en
+              lang: ar
               wiki: wikipedia
               title: frogs
           response:

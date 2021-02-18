@@ -9,3 +9,6 @@ npm-debug.log
 package-lock.json
 
 .eslintcache
+
+static/*.json
+static/*.tsv
