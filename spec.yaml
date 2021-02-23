@@ -63,9 +63,11 @@ paths:
                 items:
                   type: object
                   properties:
-                    page:
+                    project:
                       type: string
-                    suggestions:
+                    page:
+                      type: string  
+                    images:
                       type: array
                       items:
                         $ref: "#/components/schemas/suggestion"

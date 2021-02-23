@@ -26,10 +26,14 @@ router.get('/:lang/:wiki/suggestions/:title', (req, res, next) => {
  * Gets under-illustrated pages and their image suggestions
  */
 router.get('/:lang/:wiki/pages', (req, res, next) => {
-    suggestions.getPages(req.params).then((response) => {
+    suggestions.getPages(req.params)
+    .then((response) => {
         res.json(response);
-    });
-    // TODO: Error Handling
+    })
+    .catch((err) => {
+        // TODO: Error Handling
+        res.status(err.status).json(err.detail);
+	});
 });
 
 module.exports = (appObj) => {

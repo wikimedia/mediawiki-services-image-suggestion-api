@@ -24,11 +24,17 @@ describe('GET image-suggestions/v0/{lang}/{wiki}/pages', function () {
             uri: `${server.config.uri}image-suggestions/v0/ar/wikipedia/pages`
         }).then((res) => {
             assert.deepEqual(res.status, 200);
-            assert.lengthOf(res.body, 10);
+            assert.lengthOf(res.body, 8);
             assert.deepEqual(res.body[0], {
-                filename: 'Macheffect.png',
-                source: 'wikipedia',
-                confidence_rating: 'medium'
+                project: 'arwiki',
+                page: 'تأثير_وودوارد',
+                images: [
+                    {
+                        filename: 'Macheffect.png',
+                        confidence_rating: 'medium',
+                        source: 'ima'
+                    }
+                ]
             });
         });
     });
