@@ -6,9 +6,10 @@
   "main": "./app.js",
   "scripts": {
     "start": "service-runner",
-    "test": "npm run lint && PREQ_CONNECT_TIMEOUT=15 mocha --exit",
+    "test": "npm run generate-fixtures && npm run lint && PREQ_CONNECT_TIMEOUT=15 mocha --exit",
     "lint": "eslint --max-warnings 0 --ext .js --ext .json .",
     "lint:fix": "eslint --fix .",
+    "generate-fixtures": "node ./test/utils/generateFixtures.js",
     "docker-start": "service-runner docker-start",
     "docker-test": "service-runner docker-test",
     "test-build": "service-runner docker-test && service-runner build --deploy-repo --force",

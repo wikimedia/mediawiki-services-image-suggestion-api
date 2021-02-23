@@ -12,3 +12,6 @@ package-lock.json
 
 static/*.json
 static/*.tsv
+
+test/fixtures/*.tsv
+test/fixtures/*.tsv
