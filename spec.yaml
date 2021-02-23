@@ -44,7 +44,7 @@ paths:
               name: /.+/
               description: /.+/
               version: /.+/
-  # from routes/image-suggestions.js
+  # from routes/imageSuggestions.js
   /image-suggestions/v0/{lang}/{wiki}/pages:
     get:
       tags:

@@ -1,7 +1,7 @@
 'use strict';
 
 const sUtil = require('../lib/util');
-const suggestions = require('../lib/image-suggestions.js');
+const suggestions = require('../lib/imageSuggestions');
 
 /**
  * The main router object

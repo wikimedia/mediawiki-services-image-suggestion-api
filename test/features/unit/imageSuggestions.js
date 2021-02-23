@@ -1,7 +1,7 @@
 'use strict';
 
 // const assert = require('../../utils/assert');
-const suggestions = require('../../../lib/image-suggestions');
+const suggestions = require('../../../lib/imageSuggestions');
 const { assert } = require('chai');
 
 describe('GET image-suggestions/v0/{lang}/{wiki}/pages', function () {
