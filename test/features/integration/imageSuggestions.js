@@ -3,7 +3,6 @@
 const preq   = require('preq');
 const { assert } = require('chai');
 const Server = require('../../utils/server.js');
-const algoResults = require('../../../lib/algoResults');
 
 describe('GET image-suggestions/v0/{lang}/{wiki}/pages', function () {
 
@@ -11,14 +10,10 @@ describe('GET image-suggestions/v0/{lang}/{wiki}/pages', function () {
 
     const server = new Server();
 
-    before(() => {
-        algoResults.initAlgoResultsSync();
-        return server.start();
-    });
+    before(() => server.start());
 
     after(() => server.stop());
 
-    /* integration */
     it('Should return success', () => {
         return preq.get({
             uri: `${server.config.uri}image-suggestions/v0/ar/wikipedia/pages`
@@ -36,6 +31,16 @@ describe('GET image-suggestions/v0/{lang}/{wiki}/pages', function () {
                     }
                 ]
             });
+        });
+    });
+
+    it('Should accept limit and offset params', () => {
+        // TODO Implement offset
+        return preq.get({
+            uri: `${server.config.uri}image-suggestions/v0/ar/wikipedia/pages?limit=3`
+        }).then((res) => {
+            assert.deepEqual(res.status, 200);
+            assert.lengthOf(res.body, 3);
         });
     });
 

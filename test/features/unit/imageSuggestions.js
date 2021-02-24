@@ -9,20 +9,24 @@ describe('GET image-suggestions/v0/{lang}/{wiki}/pages', function () {
     it('Should throw an error if lang or wiki params are invalid', () => {
         const invalidLang = 'aar';
         const msg = `Unable to find a wikiId for language ${invalidLang} and property wikipedia`;
-        suggestions.getPages({ lang: 'aar', wiki: 'wikipedia' }).catch((err) => {
-            assert.deepEqual(err.status, 500);
+        return suggestions.getPages({ params: { lang: 'ar', wiki: 'wikipedia' }, query: {} }).catch((err) => {
+            assert.deepEqual(err.status, 404);
             assert.deepEqual(err.detail, msg);
+        });
+    });
+
+    it('Should accept limit and offset query params', () => {
+        // TODO: Implement offset
+        return suggestions.getPages({ params: { lang: 'ar', wiki: 'wikipedia' }, query: { limit: 3 } }).then((results) => {
+            assert.deepEqual(results.length, 3);
         });
     });
 
     it('Should throw a 404 if static file does not exist', () => {
     });
 
-    it('Should throw a 400 for bad input data', () => {
-    });
-
     it('Should have a response with the proper schema', () => {
-        suggestions.getPages({ lang: 'ar', wiki: 'wikipedia' }, './test/fixtures').then((response) => {
+        return suggestions.getPages({ params: { lang: 'ar', wiki: 'wikipedia' }, query: {} }, './test/fixtures').then((response) => {
             assert.isArray(response);
             assert.deepEqual(response[0], {
                 project: 'arwiki',

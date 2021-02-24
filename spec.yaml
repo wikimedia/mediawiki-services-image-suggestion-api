@@ -53,6 +53,7 @@ paths:
       parameters:
         - $ref: "#/components/parameters/lang"
         - $ref: "#/components/parameters/wiki"
+        - $ref: "#/components/parameters/limit"
       responses:
         200:
           description: Success
@@ -86,6 +87,8 @@ paths:
       x-amples:
         - title: Gets image suggestions for under-illustrated pages
           request:
+            query:
+              limit: 5
             params:
               lang: ar
               wiki: wikipedia
@@ -162,6 +165,14 @@ components:
         confidence_rating:
           type: string
   parameters:
+    limit:
+      in: query
+      name: limit
+      required: false
+      schema: 
+        type: integer
+      description: |
+        Number of pages to retrieve
     domain:
       in: path
       name: domain
