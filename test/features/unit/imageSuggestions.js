@@ -25,9 +25,13 @@ describe('GET image-suggestions/v0/{lang}/{wiki}/pages', function () {
         suggestions.getPages({ lang: 'ar', wiki: 'wikipedia' }, './test/fixtures').then((response) => {
             assert.isArray(response);
             assert.deepEqual(response[0], {
-                filename: 'Macheffect.png',
-                source: 'wikipedia',
-                confidence_rating: 'medium'
+                project: 'arwiki',
+                page: 'تأثير_وودوارد',
+                suggestions: [{
+                    filename: 'Macheffect.png',
+                    source: 'ima',
+                    confidence_rating: 'medium'
+                }]
             });
         });
     });

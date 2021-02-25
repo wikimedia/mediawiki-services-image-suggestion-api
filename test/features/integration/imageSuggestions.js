@@ -26,9 +26,9 @@ describe('GET image-suggestions/v0/{lang}/{wiki}/pages', function () {
             assert.deepEqual(res.status, 200);
             assert.lengthOf(res.body, 8);
             assert.deepEqual(res.body[0], {
-                project: 'arwiki',
                 page: 'تأثير_وودوارد',
-                images: [
+                project: 'arwiki',
+                suggestions: [
                     {
                         filename: 'Macheffect.png',
                         confidence_rating: 'medium',
