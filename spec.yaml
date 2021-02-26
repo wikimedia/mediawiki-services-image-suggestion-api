@@ -73,6 +73,12 @@ paths:
                       items:
                         $ref: "#/components/schemas/suggestion"
         404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/problem"
+        400:
           description: Bad Request
           content:
             application/json:

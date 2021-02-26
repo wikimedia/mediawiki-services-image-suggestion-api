@@ -44,9 +44,6 @@ describe('GET image-suggestions/v0/{lang}/{wiki}/pages', function () {
         });
     });
 
-    it('Should return the same response for each identical request', () => {
-    });
-
 	it('Should return the same response for each identical request', () => {
     });
 

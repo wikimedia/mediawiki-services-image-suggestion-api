@@ -3,16 +3,23 @@
 // const assert = require('../../utils/assert');
 const suggestions = require('../../../lib/imageSuggestions');
 const { assert } = require('chai');
+const { HTTPError } = require('../../../lib/util');
 
 describe('GET image-suggestions/v0/{lang}/{wiki}/pages', function () {
 
     it('Should throw an error if lang or wiki params are invalid', () => {
-        const invalidLang = 'aar';
-        const msg = `Unable to find a wikiId for language ${invalidLang} and property wikipedia`;
-        return suggestions.getPages({ params: { lang: 'ar', wiki: 'wikipedia' }, query: {} }).catch((err) => {
-            assert.deepEqual(err.status, 404);
-            assert.deepEqual(err.detail, msg);
-        });
+        assert.throws(() => {
+            suggestions.validateParams({ lang: 'aar', wiki: 'wikipedia' });
+        }, HTTPError);
+    });
+
+    it('Should throw an error if limit param is out of range or invalid', () => {
+        assert.throws(() => {
+            suggestions.validateParams('arwiki', { limit: '101' });
+        }, HTTPError);
+        assert.throws(() => {
+            suggestions.validateParams('arwiki', { limit: 'AAA' });
+        }, HTTPError);
     });
 
     it('Should accept limit and offset query params', () => {
@@ -23,6 +30,10 @@ describe('GET image-suggestions/v0/{lang}/{wiki}/pages', function () {
     });
 
     it('Should throw a 404 if static file does not exist', () => {
+         // TODO: Implement offset
+         return suggestions.getPages({ params: { lang: 'ar', wiki: 'wikipedia' }, query: { limit: 3 } }).then((results) => {
+            assert.deepEqual(results.length, 3);
+        });
     });
 
     it('Should have a response with the proper schema', () => {
