@@ -7,6 +7,7 @@ const compression = require('compression');
 const bodyParser = require('body-parser');
 const fs = BBPromise.promisifyAll(require('fs'));
 const sUtil = require('./lib/util');
+const apiUtil = require('./lib/api-util');
 const packageInfo = require('./package.json');
 const yaml = require('js-yaml');
 const addShutdown = require('http-shutdown');
@@ -64,6 +65,9 @@ function initApp(options) {
     app.conf.log_header_whitelist = new RegExp(`^(?:${app.conf.log_header_whitelist.map((item) => {
         return item.trim();
     }).join('|')})$`, 'i');
+
+    // set up the request templates for the APIs
+    apiUtil.setupApiTemplates(app);
 
     // set up the spec
     if (!app.conf.spec) {

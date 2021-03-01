@@ -3,6 +3,7 @@
 const preq   = require('preq');
 const { assert } = require('chai');
 const Server = require('../../utils/server.js');
+const mocks = require('../../utils/mocks');
 
 describe('GET image-suggestions/v0/{lang}/{wiki}/pages', function () {
 
@@ -11,8 +12,10 @@ describe('GET image-suggestions/v0/{lang}/{wiki}/pages', function () {
     const server = new Server();
 
     before(() => server.start());
-
     after(() => server.stop());
+
+    beforeEach(() => mocks.mockMwApiGet());
+    afterEach(() => mocks.restoreAll());
 
     it('Should return success', () => {
         return preq.get({

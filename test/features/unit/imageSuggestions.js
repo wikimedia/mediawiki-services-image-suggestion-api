@@ -4,8 +4,17 @@
 const suggestions = require('../../../lib/imageSuggestions');
 const { assert } = require('chai');
 const { HTTPError } = require('../../../lib/util');
+const mocks = require('../../utils/mocks');
 
 describe('GET image-suggestions/v0/{lang}/{wiki}/pages', function () {
+
+	before(() => {
+		mocks.mockMwApiGet();
+	});
+
+	after(() => {
+		mocks.restoreAll();
+	});
 
     it('Should throw an error if lang or wiki params are invalid', () => {
         assert.throws(() => {
