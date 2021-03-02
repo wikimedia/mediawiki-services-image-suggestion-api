@@ -35,12 +35,12 @@ describe('GET image-suggestions/v0/{lang}/{wiki}/pages', function () {
     });
 
     it('Should accept limit and offset params', () => {
-        // TODO Implement offset
         return preq.get({
-            uri: `${server.config.uri}image-suggestions/v0/ar/wikipedia/pages?limit=3`
+            uri: `${server.config.uri}image-suggestions/v0/ar/wikipedia/pages?limit=4&offset=2`
         }).then((res) => {
             assert.deepEqual(res.status, 200);
-            assert.lengthOf(res.body, 3);
+            assert.lengthOf(res.body, 4);
+            assert.deepEqual(res.body[0].page, 'إدين_بافتشيتش');
         });
     });
 

@@ -54,6 +54,7 @@ paths:
         - $ref: "#/components/parameters/lang"
         - $ref: "#/components/parameters/wiki"
         - $ref: "#/components/parameters/limit"
+        - $ref: "#/components/parameters/offset"
       responses:
         200:
           description: Success
@@ -95,6 +96,7 @@ paths:
           request:
             query:
               limit: 5
+              offset: 0
             params:
               lang: ar
               wiki: wikipedia
@@ -179,6 +181,14 @@ components:
         type: integer
       description: |
         Number of pages to retrieve
+    offset:
+      in: query
+      name: offset
+      required: false
+      schema: 
+        type: integer
+      description: |
+        Position in the dataset as the starting point for retrieving a subset of records
     domain:
       in: path
       name: domain

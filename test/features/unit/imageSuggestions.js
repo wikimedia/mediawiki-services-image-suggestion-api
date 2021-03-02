@@ -22,18 +22,34 @@ describe('GET image-suggestions/v0/{lang}/{wiki}/pages', function () {
         }, HTTPError);
     });
 
-    it('Should accept limit and offset query params', () => {
-        // TODO: Implement offset
+    it('Should throw an error if offset param is out of range or invalid', () => {
+        assert.throws(() => {
+            suggestions.validateParams('arwiki', { offset: '-3' });
+        }, HTTPError);
+    });
+
+    it('Should accept limit query params', () => {
         return suggestions.getPages({ params: { lang: 'ar', wiki: 'wikipedia' }, query: { limit: 3 } }).then((results) => {
             assert.deepEqual(results.length, 3);
         });
     });
+    it('Should accept limit query params', () => {
+        return suggestions.getPages({ params: { lang: 'ar', wiki: 'wikipedia' }, query: { offset: 0 } }).then((results) => {
+            assert.deepEqual(results.length, 8);
+        });
+    });
+
+    it('Should accept offset query params', () => {
+        return suggestions.getPages(
+            { params: { lang: 'ar', wiki: 'wikipedia' }, query: { limit: 2, offset: 3 }
+        }).then((results) => {
+            assert.deepEqual(results[0].page, 'الماكياج_المسرحي');
+            assert.deepEqual(results.length, 2);
+        });
+    });
 
     it('Should throw a 404 if static file does not exist', () => {
-         // TODO: Implement offset
-         return suggestions.getPages({ params: { lang: 'ar', wiki: 'wikipedia' }, query: { limit: 3 } }).then((results) => {
-            assert.deepEqual(results.length, 3);
-        });
+
     });
 
     it('Should have a response with the proper schema', () => {
