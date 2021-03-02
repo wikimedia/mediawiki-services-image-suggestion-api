@@ -28,8 +28,7 @@ router.get('/:lang/:wiki/suggestions/:title', (req, res, next) => {
 router.get('/:lang/:wiki/pages', (req, res, next) => {
     suggestions.getPages(req).then((response) => {
         res.json(response);
-    })
-    .catch((err) => {
+    }).catch((err) => {
         res.status(err.status).json(err.detail);
 	});
 });
