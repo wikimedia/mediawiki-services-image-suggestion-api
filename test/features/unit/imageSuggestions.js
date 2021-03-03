@@ -33,17 +33,17 @@ describe('GET image-suggestions/v0/{lang}/{wiki}/pages', function () {
             assert.deepEqual(results.length, 3);
         });
     });
-    it('Should accept limit query params', () => {
+    it('Should accept offset query params', () => {
         return suggestions.getPages({ params: { lang: 'ar', wiki: 'wikipedia' }, query: { offset: 0 } }).then((results) => {
-            assert.deepEqual(results.length, 8);
+            assert.deepEqual(results.length, 6);
         });
     });
 
-    it('Should accept offset query params', () => {
+    it('Should accept limit and offset query params', () => {
         return suggestions.getPages(
             { params: { lang: 'ar', wiki: 'wikipedia' }, query: { limit: 2, offset: 3 }
         }).then((results) => {
-            assert.deepEqual(results[0].page, 'الماكياج_المسرحي');
+            assert.deepEqual(results[0].page, 'ࢡ');
             assert.deepEqual(results.length, 2);
         });
     });
@@ -57,11 +57,16 @@ describe('GET image-suggestions/v0/{lang}/{wiki}/pages', function () {
             assert.isArray(response);
             assert.deepEqual(response[0], {
                 project: 'arwiki',
-                page: 'تأثير_وودوارد',
+                page: 'Ɀ',
                 suggestions: [{
-                    filename: 'Macheffect.png',
+                    filename: 'Latin_alphabet_Z_with_swash_tail.png',
                     source: 'ima',
                     confidence_rating: 'medium'
+                },
+                {
+                   confidence_rating: 'low',
+                   filename: 'Highway_gothic_font_letter_z_with_swash_tail.png',
+                   source: 'ima'
                 }]
             });
         });
