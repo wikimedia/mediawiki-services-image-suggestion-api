@@ -24,7 +24,20 @@ describe('TSV to JSON conversion', function () {
 		assert.deepEqual(results[0], expectedObj);
     });
 
-	it('Should generate json objects based on callback specification', () => {
+	it('Should throw error when tsv has unexpected first row as headers', () => {
+		const invalidTSVHeaders = 'foo\tbar]\n';
+		const expectedTSVHeaders = ['bar', 'foo'];
+		assert.throws(() => {
+			tsvToJson.tsvToJson(invalidTSVHeaders, expectedTSVHeaders, false);
+		}, Error, 'Expected foo to be bar');
+    });
+
+	it('Should not throw error when tsv has expected headers', () => {
+		const invalidTSVHeaders = 'foo\tbar\n';
+		const expectedTSVHeaders = ['foo', 'bar'];
+		assert.doesNotThrow(() => {
+			tsvToJson.tsvToJson(invalidTSVHeaders, expectedTSVHeaders, false);
+		}, Error);
     });
 
 	it('Should have empty array of suggestions for records with no image ID', () => {
