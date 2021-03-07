@@ -42,9 +42,9 @@ describe('GET image-suggestions/v0/{lang}/{wiki}/pages', function () {
         });
     });
 
-    it('Should accept limit and offset params', () => {
+    it('Should accept limit, offset, and source params', () => {
         return preq.get({
-            uri: `${server.config.uri}image-suggestions/v0/ar/wikipedia/pages?limit=4&offset=1`
+            uri: `${server.config.uri}image-suggestions/v0/ar/wikipedia/pages?limit=4&offset=1&source=ima`
         }).then((res) => {
             assert.deepEqual(res.status, 200);
             assert.lengthOf(res.body, 4);

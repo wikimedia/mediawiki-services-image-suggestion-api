@@ -24,33 +24,53 @@ describe('GET image-suggestions/v0/{lang}/{wiki}/pages', function () {
 
     it('Should throw an error if limit param is out of range or invalid', () => {
         assert.throws(() => {
-            suggestions.validateParams('arwiki', { limit: '101' });
+            suggestions.validateParams({ lang: 'ar', wiki: 'wikipedia' }, { limit: '101' });
         }, HTTPError);
         assert.throws(() => {
-            suggestions.validateParams('arwiki', { limit: 'AAA' });
+            suggestions.validateParams({ lang: 'ar', wiki: 'wikipedia' }, { limit: 'AAA' });
         }, HTTPError);
     });
 
     it('Should throw an error if offset param is out of range or invalid', () => {
         assert.throws(() => {
-            suggestions.validateParams('arwiki', { offset: '-3' });
+            suggestions.validateParams({ lang: 'ar', wiki: 'wikipedia' }, { offset: '-3' });
         }, HTTPError);
     });
 
-    it('Should accept limit query params', () => {
+    it('Should throw an error if source param is invalid', () => {
+        assert.throws(() => {
+            suggestions.validateParams({ lang: 'ar', wiki: 'wikipedia' }, { source: 'foo' });
+        }, HTTPError);
+    });
+
+    it('Should accept limit query param', () => {
         return suggestions.getPages({ params: { lang: 'ar', wiki: 'wikipedia' }, query: { limit: 3 } }).then((results) => {
             assert.deepEqual(results.length, 3);
         });
     });
-    it('Should accept offset query params', () => {
+    it('Should accept offset query param', () => {
         return suggestions.getPages({ params: { lang: 'ar', wiki: 'wikipedia' }, query: { offset: 0 } }).then((results) => {
             assert.deepEqual(results.length, 6);
         });
     });
+    it('Should accept source query param (ima)', () => {
+        return suggestions.getPages({ params: { lang: 'ar', wiki: 'wikipedia' }, query: { source: 'ima' } }).then((results) => {
+            assert.deepEqual(results.length, 6);
+            assert.deepEqual(results[0].suggestions.length, 2);
+            assert.deepEqual(results[0].suggestions[0].source, 'ima');
+        });
+    });
+    it('Should accept source query param (ms)', () => {
+        // @todo: actually return mocked ms results and confirm they are as expected.
+        return suggestions.getPages({ params: { lang: 'ar', wiki: 'wikipedia' }, query: { source: 'ms' } }).then((results) => {
+            assert.deepEqual(results.length, 6);
+            assert.deepEqual(results[0].suggestions.length, 0);
+        });
+    });
 
-    it('Should accept limit and offset query params', () => {
+    it('Should accept limit, offset, and source query params', () => {
         return suggestions.getPages(
-            { params: { lang: 'ar', wiki: 'wikipedia' }, query: { limit: 2, offset: 3 }
+            { params: { lang: 'ar', wiki: 'wikipedia' }, query: { limit: 2, offset: 3, source: 'ima' }
         }).then((results) => {
             assert.deepEqual(results[0].page, 'ࢡ');
             assert.deepEqual(results.length, 2);
