@@ -55,6 +55,7 @@ paths:
         - $ref: "#/components/parameters/wiki"
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/offset"
+        - $ref: "#/components/parameters/source"
       responses:
         200:
           description: Success
@@ -92,11 +93,12 @@ paths:
               schema:
                 $ref: "#/components/schemas/problem"
       x-amples:
-        - title: Gets image suggestions for under-illustrated pages
+        - title: Gets image suggestions from the Image Matching Algorithm for under-illustrated pages
           request:
             query:
               limit: 5
               offset: 0
+              source: 'ima'
             params:
               lang: ar
               wiki: wikipedia
@@ -185,10 +187,18 @@ components:
       in: query
       name: offset
       required: false
-      schema: 
+      schema:
         type: integer
       description: |
         Position in the dataset as the starting point for retrieving a subset of records
+    source:
+      in: query
+      name: source
+      required: false
+      schema:
+        type: string
+      description: |
+        Retrieve data only from the specified source. Ex: `ima` (Image Matching Algorithm) or `ms` (MediaSearch)
     domain:
       in: path
       name: domain
