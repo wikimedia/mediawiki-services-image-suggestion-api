@@ -49,6 +49,11 @@ describe('GET image-suggestions/v0/{lang}/{wiki}/pages', function () {
             assert.deepEqual(res.status, 200);
             assert.lengthOf(res.body, 4);
             assert.deepEqual(res.body[0].page, 'Ɱ');
+            res.body.forEach((page) => {
+                page.suggestions.forEach((suggestion) => {
+                    assert.propertyVal(suggestion, 'source', 'ima');
+                });
+            });
         });
     });
 
