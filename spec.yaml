@@ -140,7 +140,7 @@ components:
       schema:
         type: integer
       description: |
-        Position in the dataset as the starting point for retrieving a subset of records
+        Number of records to skip before beginning to return results
     source:
       in: query
       name: source

@@ -48,23 +48,26 @@ describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
             assert.deepEqual(results.length, 3);
         });
     });
-    it('Should accept offset query param', () => {
-        return suggestions.getPages({ params: { wiki: 'wikipedia', lang: 'ar' }, query: { offset: 0 } }).then((results) => {
-            assert.deepEqual(results.length, 6);
+    it('Should accept offset query params', () => {
+        return suggestions.getPages({ params: { wiki: 'wikipedia', lang: 'ar' }, query: { offset: 2 } }).then((results) => {
+            assert.deepEqual(results[0].page, 'Page Three');
         });
     });
     it('Should accept source query param (ima)', () => {
         return suggestions.getPages({ params: { wiki: 'wikipedia', lang: 'ar' }, query: { source: 'ima' } }).then((results) => {
-            assert.deepEqual(results.length, 6);
-            assert.deepEqual(results[0].suggestions.length, 2);
-            assert.deepEqual(results[0].suggestions[0].source, 'ima');
+            assert.deepEqual(results.length, 8);
+            results.forEach((page) => {
+                page.suggestions.forEach((suggestion) => {
+                    assert.propertyVal(suggestion, 'source', 'ima');
+                });
+            });
+
         });
     });
     it('Should accept source query param (ms)', () => {
         // @todo: actually return mocked ms results and confirm they are as expected.
         return suggestions.getPages({ params: { wiki: 'wikipedia', lang: 'ar' }, query: { source: 'ms' } }).then((results) => {
-            assert.deepEqual(results.length, 6);
-            assert.deepEqual(results[0].suggestions.length, 0);
+            assert.deepEqual(results.length, 8);
         });
     });
 
@@ -72,13 +75,14 @@ describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
         return suggestions.getPages(
             { params: { wiki: 'wikipedia', lang: 'ar' }, query: { limit: 2, offset: 3, source: 'ima' }
         }).then((results) => {
-            assert.deepEqual(results[0].page, 'ࢡ');
-            assert.deepEqual(results.length, 2);
+            assert.deepEqual(results[0].page, 'Page Four');
+            assert.lengthOf(results, 2);
+            results.forEach((page) => {
+                page.suggestions.forEach((suggestion) => {
+                    assert.propertyVal(suggestion, 'source', 'ima');
+                });
+            });
         });
-    });
-
-    it('Should throw a 404 if static file does not exist', () => {
-
     });
 
     it('Should have a response with the proper schema', () => {
@@ -86,15 +90,15 @@ describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
             assert.isArray(response);
             assert.deepEqual(response[0], {
                 project: 'arwiki',
-                page: 'Ɀ',
+                page: 'Page One',
                 suggestions: [{
-                    filename: 'Latin_alphabet_Z_with_swash_tail.png',
+                    filename: 'Page 1 Image 1.png',
                     source: 'ima',
                     confidence_rating: 'medium'
                 },
                 {
-                   confidence_rating: 'low',
-                   filename: 'Highway_gothic_font_letter_z_with_swash_tail.png',
+                   confidence_rating: 'high',
+                   filename: 'Page 1 Image 2.png',
                    source: 'ima'
                 }]
             });

@@ -12,7 +12,8 @@ const packageInfo = require('./package.json');
 const yaml = require('js-yaml');
 const addShutdown = require('http-shutdown');
 const path = require('path');
-const algoResults = require('./lib/algoResults.js');
+const database = require('./lib/database/database');
+const AlgoResults = require('./lib/algoResults');
 
 /**
  * Creates an express app and initialises it
@@ -129,12 +130,24 @@ function initApp(options) {
 
     // TODO: This is so bad/ugly, find better way to load data when testing
     // TODO: Please dont forget to fix me. please.
-    if (process.env.TEST_MODE === undefined) {
-        algoResults.initAlgoResultsSync();
+    let dataPath;
+    if (process.env.TEST_MODE !== undefined) {
+        dataPath = './test/fixtures';
+    } else {
+        dataPath = './static';
     }
 
-    return BBPromise.resolve(app);
+    database.init(dataPath); // start up in-memory database and create tables
 
+    const algoResults = new AlgoResults(database);
+    app.logger.log('info', 'Beginning to populate database');
+    algoResults.populateDatabase(dataPath).then((id) => {
+        app.logger.log('info', 'Finished populating database');
+    }).catch((err) => { // insert data from TSVs into DB
+        throw new Error(err);
+    });
+
+    return BBPromise.resolve(app);
 }
 
 /**

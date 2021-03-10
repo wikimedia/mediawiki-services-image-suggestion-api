@@ -6,10 +6,9 @@
   "main": "./app.js",
   "scripts": {
     "start": "service-runner",
-    "test": "npm run generate-fixtures && npm run lint && PREQ_CONNECT_TIMEOUT=15 TEST_MODE=true mocha --exit",
+    "test": "npm run lint && PREQ_CONNECT_TIMEOUT=15 TEST_MODE=true mocha --exit",
     "lint": "eslint --max-warnings 0 --ext .js --ext .json .",
     "lint:fix": "eslint --fix .",
-    "generate-fixtures": "node ./test/utils/generateFixtures.js",
     "docker-start": "service-runner docker-start",
     "docker-test": "service-runner docker-test",
     "test-build": "service-runner docker-test && service-runner build --deploy-repo --force",
@@ -33,6 +32,7 @@
     "js-yaml": "^3.13.1",
     "preq": "^0.5.9",
     "service-runner": "^2.7.1",
+    "sqlite3": "^5.0.2",
     "swagger-router": "^0.7.4",
     "swagger-ui-dist": "^3.22.3",
     "uuid": "^3.3.2"
