@@ -14,12 +14,10 @@ const router = sUtil.router();
 let app;
 
 /**
+ * TODO: Implement
  * GET /image-suggestions/v0/{lang}/{wiki}/pages/{title}
  * Gets image suggestions for an individual page
  */
-router.get('/:lang/:wiki/suggestions/:title', (req, res, next) => {
-    res.json({ woot: 'woot' });
-});
 
 /**
  * GET /image-suggestions/v0/{lang}/{wiki}/pages

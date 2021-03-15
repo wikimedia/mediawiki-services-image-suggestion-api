@@ -106,56 +106,6 @@ paths:
             status: 200
             headers:
               content-type: application/json
-  /image-suggestions/v0/{lang}/{wiki}/suggestions/{title}:
-    get:
-      tags:
-        - Page Image Suggestions
-      description: Gets image suggestions for a specified page
-      parameters:
-        - $ref: "#/components/parameters/lang"
-        - $ref: "#/components/parameters/wiki"
-        - $ref: "#/components/parameters/title"
-      responses:
-        200:
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                    suggestions:
-                      type: array
-                      items:
-                        $ref: "#/components/schemas/suggestion"
-        400:
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/problem"
-        404:
-          description: Page not found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/problem"
-        default:
-          description: Error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/problem"
-      x-amples:
-        - title: Successfully gets images for a specified page
-          request:
-            params:
-              lang: ar
-              wiki: wikipedia
-              title: frogs
-          response:
-            status: 200
-            headers:
-              content-type: application/json
 components:
   schemas:
     problem:
