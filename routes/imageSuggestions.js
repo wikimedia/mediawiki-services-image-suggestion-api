@@ -15,15 +15,15 @@ let app;
 
 /**
  * TODO: Implement
- * GET /image-suggestions/v0/{lang}/{wiki}/pages/{title}
+ * GET /image-suggestions/v0/{wiki}/{lang}/pages/{title}
  * Gets image suggestions for an individual page
  */
 
 /**
- * GET /image-suggestions/v0/{lang}/{wiki}/pages
+ * GET /image-suggestions/v0/{wiki}/{lang}/pages
  * Gets under-illustrated pages and their image suggestions
  */
-router.get('/:lang/:wiki/pages', (req, res, next) => {
+router.get('/:wiki/:lang/pages', (req, res, next) => {
     suggestions.getPages(req).then((response) => {
         res.json(response);
     }).catch((err) => {

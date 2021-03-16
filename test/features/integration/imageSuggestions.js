@@ -5,7 +5,7 @@ const { assert } = require('chai');
 const Server = require('../../utils/server.js');
 const mocks = require('../../utils/mocks');
 
-describe('GET image-suggestions/v0/{lang}/{wiki}/pages', function () {
+describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
 
     this.timeout(20000);
 
@@ -19,7 +19,7 @@ describe('GET image-suggestions/v0/{lang}/{wiki}/pages', function () {
 
     it('Should return success', () => {
         return preq.get({
-            uri: `${server.config.uri}image-suggestions/v0/ar/wikipedia/pages`
+            uri: `${server.config.uri}image-suggestions/v0/wikipedia/ar/pages`
         }).then((res) => {
             assert.deepEqual(res.status, 200);
             assert.lengthOf(res.body, 6);
@@ -44,7 +44,7 @@ describe('GET image-suggestions/v0/{lang}/{wiki}/pages', function () {
 
     it('Should accept limit, offset, and source params', () => {
         return preq.get({
-            uri: `${server.config.uri}image-suggestions/v0/ar/wikipedia/pages?limit=4&offset=1&source=ima`
+            uri: `${server.config.uri}image-suggestions/v0/wikipedia/ar/pages?limit=4&offset=1&source=ima`
         }).then((res) => {
             assert.deepEqual(res.status, 200);
             assert.lengthOf(res.body, 4);
@@ -63,7 +63,7 @@ describe('GET image-suggestions/v0/{lang}/{wiki}/pages', function () {
 
     it('Should have an empty array of suggestions for pages without suggestions', () => {
         return preq.get({
-            uri: `${server.config.uri}image-suggestions/v0/ar/wikipedia/pages`
+            uri: `${server.config.uri}image-suggestions/v0/wikipedia/ar/pages`
         }).then((res) => {
             assert.deepEqual(res.status, 200);
             assert.lengthOf(res.body[res.body.length - 1].suggestions, 0);

@@ -6,13 +6,13 @@ const { assert } = require('chai');
 describe('Algo Results', function () {
 
     it('Should generate wiki ID', () => {
-		const id = wikiId.getWikiId('ar', 'wikipedia');
+		const id = wikiId.getWikiId('wikipedia', 'ar');
 		assert.deepEqual(id, 'arwiki');
     });
 
     it('Should return false for invalid wiki ID', () => {
-		const invalidLang = wikiId.getWikiId('boop', 'wikipedia');
-		const invalidWiki = wikiId.getWikiId('ar', 'shmikipedia');
+		const invalidLang = wikiId.getWikiId('wikipedia', 'boop');
+		const invalidWiki = wikiId.getWikiId('shmikipedia', 'ar');
 		assert.isFalse(invalidLang);
 		assert.isFalse(invalidWiki);
     });

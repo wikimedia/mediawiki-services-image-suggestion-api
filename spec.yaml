@@ -45,14 +45,14 @@ paths:
               description: /.+/
               version: /.+/
   # from routes/imageSuggestions.js
-  /image-suggestions/v0/{lang}/{wiki}/pages:
+  /image-suggestions/v0/{wiki}/{lang}/pages:
     get:
       tags:
         - Image Suggestions
       description: Gets image suggestions for multiple under-illustrated pages
       parameters:
-        - $ref: "#/components/parameters/lang"
         - $ref: "#/components/parameters/wiki"
+        - $ref: "#/components/parameters/lang"
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/offset"
         - $ref: "#/components/parameters/source"
@@ -100,8 +100,8 @@ paths:
               offset: 0
               source: 'ima'
             params:
-              lang: ar
               wiki: wikipedia
+              lang: ar
           response:
             status: 200
             headers:
@@ -165,14 +165,6 @@ components:
         type: string
       description: |
         Page title. Use underscores instead of spaces. Example: `Main_Page`
-    lang:
-      in: path
-      name: lang
-      required: true
-      schema:
-        type: string
-      description: |
-        Wiki language abbrevation. Example: `en` or `es`.
     wiki:
       in: path
       name: wiki
@@ -181,3 +173,11 @@ components:
         type: string
       description: |
         WMF wiki type. Example `wikipedia` or `wiktionary`.
+    lang:
+      in: path
+      name: lang
+      required: true
+      schema:
+        type: string
+      description: |
+        Wiki language abbrevation. Example: `en` or `es`.

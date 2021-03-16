@@ -7,7 +7,7 @@ const { HTTPError } = require('../../../lib/util');
 describe('Algo Results', function () {
 
     it('Should return rejected promise when static file does not exist', () => {
-        return algoResults.getResults({ lang: 'ar', wiki: 'wikipedia' }, {}, '/bogus/path').catch((err) => {
+        return algoResults.getResults({ wiki: 'wikipedia', lang: 'ar' }, {}, '/bogus/path').catch((err) => {
 			assert.instanceOf(err, HTTPError);
 			assert.deepEqual(err.status, 404);
 		});

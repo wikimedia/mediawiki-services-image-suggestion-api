@@ -6,7 +6,7 @@ const { assert } = require('chai');
 const { HTTPError } = require('../../../lib/util');
 const mocks = require('../../utils/mocks');
 
-describe('GET image-suggestions/v0/{lang}/{wiki}/pages', function () {
+describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
 
 	before(() => {
 		mocks.mockMwApiGet();
@@ -18,43 +18,43 @@ describe('GET image-suggestions/v0/{lang}/{wiki}/pages', function () {
 
     it('Should throw an error if lang or wiki params are invalid', () => {
         assert.throws(() => {
-            suggestions.validateParams({ lang: 'aar', wiki: 'wikipedia' });
+            suggestions.validateParams({ wiki: 'wikipedia', lang: 'aar' });
         }, HTTPError);
     });
 
     it('Should throw an error if limit param is out of range or invalid', () => {
         assert.throws(() => {
-            suggestions.validateParams({ lang: 'ar', wiki: 'wikipedia' }, { limit: '101' });
+            suggestions.validateParams({ wiki: 'wikipedia', lang: 'ar' }, { limit: '101' });
         }, HTTPError);
         assert.throws(() => {
-            suggestions.validateParams({ lang: 'ar', wiki: 'wikipedia' }, { limit: 'AAA' });
+            suggestions.validateParams({ wiki: 'wikipedia', lang: 'ar' }, { limit: 'AAA' });
         }, HTTPError);
     });
 
     it('Should throw an error if offset param is out of range or invalid', () => {
         assert.throws(() => {
-            suggestions.validateParams({ lang: 'ar', wiki: 'wikipedia' }, { offset: '-3' });
+            suggestions.validateParams({ wiki: 'wikipedia', lang: 'ar' }, { offset: '-3' });
         }, HTTPError);
     });
 
     it('Should throw an error if source param is invalid', () => {
         assert.throws(() => {
-            suggestions.validateParams({ lang: 'ar', wiki: 'wikipedia' }, { source: 'foo' });
+            suggestions.validateParams({ wiki: 'wikipedia', lang: 'ar' }, { source: 'foo' });
         }, HTTPError);
     });
 
     it('Should accept limit query param', () => {
-        return suggestions.getPages({ params: { lang: 'ar', wiki: 'wikipedia' }, query: { limit: 3 } }).then((results) => {
+        return suggestions.getPages({ params: { wiki: 'wikipedia', lang: 'ar' }, query: { limit: 3 } }).then((results) => {
             assert.deepEqual(results.length, 3);
         });
     });
     it('Should accept offset query param', () => {
-        return suggestions.getPages({ params: { lang: 'ar', wiki: 'wikipedia' }, query: { offset: 0 } }).then((results) => {
+        return suggestions.getPages({ params: { wiki: 'wikipedia', lang: 'ar' }, query: { offset: 0 } }).then((results) => {
             assert.deepEqual(results.length, 6);
         });
     });
     it('Should accept source query param (ima)', () => {
-        return suggestions.getPages({ params: { lang: 'ar', wiki: 'wikipedia' }, query: { source: 'ima' } }).then((results) => {
+        return suggestions.getPages({ params: { wiki: 'wikipedia', lang: 'ar' }, query: { source: 'ima' } }).then((results) => {
             assert.deepEqual(results.length, 6);
             assert.deepEqual(results[0].suggestions.length, 2);
             assert.deepEqual(results[0].suggestions[0].source, 'ima');
@@ -62,7 +62,7 @@ describe('GET image-suggestions/v0/{lang}/{wiki}/pages', function () {
     });
     it('Should accept source query param (ms)', () => {
         // @todo: actually return mocked ms results and confirm they are as expected.
-        return suggestions.getPages({ params: { lang: 'ar', wiki: 'wikipedia' }, query: { source: 'ms' } }).then((results) => {
+        return suggestions.getPages({ params: { wiki: 'wikipedia', lang: 'ar' }, query: { source: 'ms' } }).then((results) => {
             assert.deepEqual(results.length, 6);
             assert.deepEqual(results[0].suggestions.length, 0);
         });
@@ -70,7 +70,7 @@ describe('GET image-suggestions/v0/{lang}/{wiki}/pages', function () {
 
     it('Should accept limit, offset, and source query params', () => {
         return suggestions.getPages(
-            { params: { lang: 'ar', wiki: 'wikipedia' }, query: { limit: 2, offset: 3, source: 'ima' }
+            { params: { wiki: 'wikipedia', lang: 'ar' }, query: { limit: 2, offset: 3, source: 'ima' }
         }).then((results) => {
             assert.deepEqual(results[0].page, 'ࢡ');
             assert.deepEqual(results.length, 2);
@@ -82,7 +82,7 @@ describe('GET image-suggestions/v0/{lang}/{wiki}/pages', function () {
     });
 
     it('Should have a response with the proper schema', () => {
-        return suggestions.getPages({ params: { lang: 'ar', wiki: 'wikipedia' }, query: {} }, './test/fixtures').then((response) => {
+        return suggestions.getPages({ params: { wiki: 'wikipedia', lang: 'ar' }, query: {} }, './test/fixtures').then((response) => {
             assert.isArray(response);
             assert.deepEqual(response[0], {
                 project: 'arwiki',
