@@ -1,18 +1,17 @@
 'use strict';
 
-// const assert = require('../../utils/assert');
+const assert = require('../../utils/assert');
 const suggestions = require('../../../lib/imageSuggestions');
-const { assert } = require('chai');
 const { HTTPError } = require('../../../lib/util');
 const mocks = require('../../utils/mocks');
 
 describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
 
-	before(() => {
+	beforeEach(() => {
 		mocks.mockMwApiGet();
 	});
 
-	after(() => {
+	afterEach(() => {
 		mocks.restoreAll();
 	});
 
@@ -43,11 +42,21 @@ describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
         }, HTTPError);
     });
 
+    it('Should throw an error for failing to get MediaSearch results', () => {
+        mocks.restoreAll();
+        mocks.mockMwApiGet(new Error());
+        return assert.fails(suggestions.getPages({ params: { wiki: 'wikipedia', lang: 'ar' }, query: {} }), (err) => {
+            assert.instanceOf(err, HTTPError);
+            assert.deepEqual(err.title, 'Cannot retrieve mediasearch results');
+		});
+    });
+
     it('Should accept limit query param', () => {
         return suggestions.getPages({ params: { wiki: 'wikipedia', lang: 'ar' }, query: { limit: 3 } }).then((results) => {
             assert.deepEqual(results.length, 3);
         });
     });
+
     it('Should accept offset query params', () => {
         return suggestions.getPages({ params: { wiki: 'wikipedia', lang: 'ar' }, query: { offset: 2 } }).then((results) => {
             assert.deepEqual(results[0].page, 'Page Three');

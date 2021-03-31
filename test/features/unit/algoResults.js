@@ -37,7 +37,7 @@ describe('Algo Results', function () {
 	it('Should reject promise if tsv path does not exist', () => {
 		const mockDB = getMockDatabase();
 		const algoResults = new AlgoResults(mockDB);
-		assert.fails(algoResults.populateDatabase('./woo/hoo'), (err) => {
+		return assert.fails(algoResults.populateDatabase('./woo/hoo'), (err) => {
 			assert.instanceOf(err, Error);
 			assert.deepEqual(err.code, 'ENOENT');
 		});
@@ -47,11 +47,11 @@ describe('Algo Results', function () {
 		const mockDB = getMockDatabase();
 		mocks.mockFs();
 		const algoResults = new AlgoResults(mockDB);
-		assert.fails(algoResults.populateDatabase('./test/fixtures'), (err) => {
+		return assert.fails(algoResults.populateDatabase('./test/fixtures'), (err) => {
 			assert.deepEqual(err.message, 'No tsv files found to populate database with');
 			assert.instanceOf(err, Error);
+			mocks.restoreAll();
 		});
-		mocks.restoreAll();
 	});
 
 	it('Should successfully populate in-memory database', () => {

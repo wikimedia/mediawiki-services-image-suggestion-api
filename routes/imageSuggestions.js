@@ -23,12 +23,13 @@ let app;
  * GET /image-suggestions/v0/{wiki}/{lang}/pages
  * Gets under-illustrated pages and their image suggestions
  */
-router.get('/:wiki/:lang/pages', (req, res, next) => {
-    suggestions.getPages(req).then((response) => {
+router.get('/:wiki/:lang/pages', async (req, res, next) => {
+    try {
+        const response = await suggestions.getPages(req);
         res.json(response);
-    }).catch((err) => {
-        res.status(err.status).json(err.detail);
-	});
+    } catch (err) {
+        res.status(err.status).json(err);
+    }
 });
 
 module.exports = (appObj) => {

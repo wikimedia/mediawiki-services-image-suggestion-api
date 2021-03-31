@@ -141,7 +141,7 @@ function initApp(options) {
 
     const algoResults = new AlgoResults(database);
     app.logger.log('info', 'Beginning to populate database');
-    algoResults.populateDatabase(dataPath).then((id) => {
+    algoResults.populateDatabase(dataPath).then(() => {
         app.logger.log('info', 'Finished populating database');
     }).catch((err) => { // insert data from TSVs into DB
         throw new Error(err);

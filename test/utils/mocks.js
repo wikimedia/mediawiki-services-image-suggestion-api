@@ -4,8 +4,12 @@ const sinon = require('sinon');
 const apiUtil = require('../../lib/api-util');
 const fs = require('fs');
 
-function mockMwApiGet() {
-	sinon.stub(apiUtil, 'mwApiGet').resolves(false);
+function mockMwApiGet(value = false) {
+	if (value instanceof Error) {
+		sinon.stub(apiUtil, 'mwApiGet').throws(value);
+	} else {
+		sinon.stub(apiUtil, 'mwApiGet').resolves(value);
+	}
 }
 
 function mockFs() {
