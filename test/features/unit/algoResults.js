@@ -4,11 +4,11 @@ const AlgoResults = require('../../../lib/algoResults');
 const assert = require('../../utils/assert');
 const mocks = require('../../utils/mocks');
 
-function getMockDatabase() {
+function getMockDatabase(mockResults = []) {
 	const mockDB = {
 		exec: () => {
 			return new Promise((resolve) => {
-				resolve([{ woop: 'woop' }]); // Make me return what is needed for tests
+				resolve(mockResults);
 			});
 		},
 		insert: () => {
@@ -60,6 +60,53 @@ describe('Algo Results', function () {
 		return Promise.resolve(algoResults.populateDatabase('./test/fixtures')).then((resp) => {
 		}).catch((resp) => {
 			throw new Error('Was not supposed to fail');
+		});
+	});
+
+	it('Should return expected results', () => {
+		const mockDB = getMockDatabase([
+			{
+				page: 'Page One',
+				project: 'arwiki',
+				suggestions: []
+			}
+		]);
+		const algoResults = new AlgoResults(mockDB);
+		const query = {
+			limit: 1,
+			offset: 0,
+			source: ''
+		};
+		return Promise.resolve(algoResults.queryDBForPages('arwiki', query)).then((results) => {
+			assert.lengthOf(results, 1);
+            assert.deepEqual(results[0].page, 'Page One');
+            assert.deepEqual(results[0].project, 'arwiki');
+			assert.lengthOf(results[0].suggestions, 0);
+		});
+	});
+
+	it('Should accept rowNum values', () => {
+		const mockDB = getMockDatabase([
+			{
+				page: 'Page Two',
+				project: 'arwiki',
+				suggestions: []
+			}
+		]);
+		const algoResults = new AlgoResults(mockDB);
+		const query = {
+			limit: 1,
+			offset: 0,
+			source: ''
+		};
+		const rowNums = [2];
+		return Promise.resolve(algoResults.queryDBForPages(
+			'arwiki', query, rowNums
+		)).then((results) => {
+			assert.lengthOf(results, 1);
+            assert.deepEqual(results[0].page, 'Page Two');
+            assert.deepEqual(results[0].project, 'arwiki');
+			assert.lengthOf(results[0].suggestions, 0);
 		});
 	});
 });
