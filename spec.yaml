@@ -53,6 +53,7 @@ paths:
       parameters:
         - $ref: "#/components/parameters/wiki"
         - $ref: "#/components/parameters/lang"
+        - $ref: "#/components/parameters/seed"
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/offset"
         - $ref: "#/components/parameters/source"
@@ -62,18 +63,23 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    project:
-                      type: string
-                    page:
-                      type: string  
-                    suggestions:
-                      type: array
-                      items:
-                        $ref: "#/components/schemas/suggestion"
+                type: object
+                properties:
+                  seed: 
+                    type: integer
+                  pages: 
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        page:
+                          type: string  
+                        project:
+                          type: string
+                        suggestions:
+                          type: array
+                          items:
+                            $ref: "#/components/schemas/suggestion"
         404:
           description: Not Found
           content:
@@ -96,6 +102,7 @@ paths:
         - title: Gets image suggestions from the Image Matching Algorithm for under-illustrated pages
           request:
             query:
+              seed: 0
               limit: 5
               offset: 0
               source: 'ima'
@@ -120,11 +127,32 @@ components:
       properties:
         filename:
           type: string
-        source:
-          type: string
         confidence_rating:
           type: string
+        source:
+          type: object
+          properties:
+            name: 
+              type: string
+            details: 
+              $ref: "#/components/schemas/details"
+    details:
+      required:
+        - type
+      properties:
+        from:
+          type: string
+      description: |
+        further details about a "suggestion" block. Fields may vary by suggestion type.
   parameters:
+    seed:
+      in: query
+      name: seed
+      required: false
+      schema:
+        type: integer
+      description: |
+        Seed value for retreiving deterministric random results. The special value 0 (zero) gives results ordered by page id
     limit:
       in: query
       name: limit
