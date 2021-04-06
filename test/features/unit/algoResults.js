@@ -31,7 +31,7 @@ describe('Algo Results', function () {
 		}, 'Expected image_id to equal source');
 		assert.throws(() => {
 			algoResults.validateHeaders(headersMissingValue, expectedHeaders);
-		}, 'TSV headers to not match expected headers');
+		}, 'TSV headers do not match expected headers');
 	});
 
 	it('Should reject promise if tsv path does not exist', () => {

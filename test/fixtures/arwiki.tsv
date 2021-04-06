@@ -1,25 +1,25 @@
-page_id	page_title	image_id	confidence_rating	source	dataset_id	insertion_ts	wiki
-1	Page One	Page 1 Image 1.png	medium	wikipedia	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki
-1	Page One	Page 1 Image 2.png	high	commons	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki
-2	Page Two	Page 2 or 3 Image 1.svg	high	commons	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki
-3	Page Three	Page 2 or 3 Image 1.svg	low	wikidata	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki
-4	Page Four	Page 4 Image 1.jpg	medium	wikipedia	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki
-4	Page Four	Page 4 or 5 Image 2.jpg	high	commons	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki
-5	Page Five	NULL	NULL	NULL	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki
-6	Page Six	NULL	NULL	NULL	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki
-7	Page Seven	NULL	NULL	NULL	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki
-8	Page Eight	NULL	NULL	NULL	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki
-9	Page Nine	Page 9 Image 1.png	low	wikidata	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki
-10	Page Ten	NULL	NULL	NULL	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki
-11	Page Eleven	NULL	NULL	NULL	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki
-12	Page Twelve	NULL	NULL	NULL	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki
-13	Page Thirteen	NULL	NULL	NULL	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki
-14	Page Fourteen	Page 14 Image 1.png	medium	wikipedia	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki
-15	Page Fifteen	NULL	NULL	NULL	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki
-16	Page Sixteen	NULL	NULL	NULL	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki
-17	Page Seventeen	NULL	NULL	NULL	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki
-18	Page Eighteen	Page 18 Image 1.png	medium	wikipedia	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki
-18	Page Eighteen	Page 18 Image 2.png	high	commons	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki
-19	Page Nineteen	Page 19 Image 1.jpg	medium	wikipedia	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki
-19	Page Nineteen	Page 19 Image 2.jpg	medium	wikipedia	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki
-19	Page Nineteen	Page 19 Image 3.jpg	medium	wikipedia	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki
+page_id	page_title	image_id	confidence_rating	source	dataset_id	insertion_ts	wiki	found_on
+1	Page One	Page 1 Image 1.png	medium	wikipedia	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki	ruwiki
+1	Page One	Page 1 Image 2.png	high	commons	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki	
+2	Page Two	Page 2 or 3 Image 1.svg	high	commons	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki	
+3	Page Three	Page 2 or 3 Image 1.svg	low	wikidata	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki	
+4	Page Four	Page 4 Image 1.jpg	medium	wikipedia	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki	
+4	Page Four	Page 4 or 5 Image 2.jpg	high	commons	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki	
+5	Page Five	NULL	NULL	NULL	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki	
+6	Page Six	NULL	NULL	NULL	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki	
+7	Page Seven	NULL	NULL	NULL	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki	
+8	Page Eight	NULL	NULL	NULL	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki	
+9	Page Nine	Page 9 Image 1.png	low	wikidata	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki	
+10	Page Ten	NULL	NULL	NULL	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki	
+11	Page Eleven	NULL	NULL	NULL	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki	
+12	Page Twelve	NULL	NULL	NULL	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki	
+13	Page Thirteen	NULL	NULL	NULL	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki	
+14	Page Fourteen	Page 14 Image 1.png	medium	wikipedia	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki	idwiki,nlwiki,alswiki
+15	Page Fifteen	NULL	NULL	NULL	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki	
+16	Page Sixteen	NULL	NULL	NULL	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki	
+17	Page Seventeen	NULL	NULL	NULL	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki	
+18	Page Eighteen	Page 18 Image 1.png	medium	wikipedia	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki	bgwiki
+18	Page Eighteen	Page 18 Image 2.png	high	commons	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki	
+19	Page Nineteen	Page 19 Image 1.jpg	medium	wikipedia	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki	ruwiki
+19	Page Nineteen	Page 19 Image 2.jpg	medium	wikipedia	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki	ruwiki
+19	Page Nineteen	Page 19 Image 3.jpg	medium	wikipedia	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki	ruwiki
