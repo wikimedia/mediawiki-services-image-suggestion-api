@@ -57,8 +57,18 @@ describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
         });
     });
 
-	it('Should return the same response for each identical request', () => {
-
+    it('Should have the same image returned for 2 different pages', () => {
+        return preq.get({
+            uri: `${server.config.uri}image-suggestions/v0/wikipedia/ar/pages?source=ima`
+        }).then((res) => {
+            const pageTwoResults = res.body[1];
+            const pageThreeResults = res.body[2];
+            const sharedImage = 'Page 2 or 3 Image 1.svg';
+            assert.include(pageTwoResults.suggestions[0], { filename: sharedImage });
+            assert.include(pageThreeResults.suggestions[0], { filename: sharedImage });
+            // console.log(pageTwoResults);
+            // console.log(pageThreeResults);
+        });
     });
 
     it('Should have an empty array of suggestions for pages without suggestions', () => {
