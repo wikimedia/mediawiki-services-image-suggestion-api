@@ -137,16 +137,22 @@ function initApp(options) {
         dataPath = './static';
     }
 
-    database.init(dataPath); // start up in-memory database and create tables
-
-    const algoResults = new AlgoResults(database);
-    app.logger.log('info', 'Beginning to populate database');
-    algoResults.populateDatabase(dataPath).then(() => {
-        app.logger.log('info', 'Finished populating database');
-    }).catch((err) => { // insert data from TSVs into DB
-        throw new Error(err);
+    const databaseExists = database.exists(`${dataPath}/database.db`);
+    database.start(`${dataPath}/database.db`).then(() => {
+        if (!databaseExists) {
+            app.logger.log('info', 'Beginning to populate database');
+             // start up in-memory database and create tables
+            database.init(dataPath);
+            const algoResults = new AlgoResults(database);
+            algoResults.populateDatabase(dataPath).then(() => {
+                app.logger.log('info', 'Finished populating database');
+            });
+        } else {
+            app.logger.log('info', 'Using existing database file');
+            const algoResults = new AlgoResults(database);
+            algoResults.initFromExistingDb(dataPath);
+        }
     });
-
     return BBPromise.resolve(app);
 }
 

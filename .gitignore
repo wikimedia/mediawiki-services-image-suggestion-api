@@ -11,7 +11,7 @@ package-lock.json
 
 .eslintcache
 
-static/*.json
 static/*.tsv
+static/*.db*
 
-test/fixtures/*.json
+test/fixtures/*.db
