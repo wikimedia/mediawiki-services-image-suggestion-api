@@ -16,4 +16,11 @@ describe('Algo Results', function () {
 		assert.isFalse(invalidLang);
 		assert.isFalse(invalidWiki);
     });
+
+	it('Should return if language is recognized', () => {
+		const invalidLang = wikiId.isRecognizedLanguage('babawiki');
+		const validLang = wikiId.isRecognizedLanguage('arwiki');
+		assert.isFalse(invalidLang);
+		assert.isTrue(validLang);
+    });
 });
