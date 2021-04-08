@@ -6,7 +6,7 @@ page_id	page_title	image_id	confidence_rating	source	dataset_id	insertion_ts	wik
 4	Page Four	Page 4 Image 1.jpg	medium	wikipedia	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki	
 4	Page Four	Page 4 or 5 Image 2.jpg	high	commons	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki	
 5	Page Five	NULL	NULL	NULL	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki	
-6	Page Six	NULL	NULL	NULL	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki	
+6	Page Six				8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki	
 7	Page Seven	NULL	NULL	NULL	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki	
 8	Page Eight	NULL	NULL	NULL	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki	
 9	Page Nine	Page 9 Image 1.png	low	wikidata	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki	
