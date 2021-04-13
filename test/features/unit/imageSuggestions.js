@@ -114,7 +114,7 @@ describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
                             name: 'ima',
                             details: {
                                 from: 'wikipedia',
-                                found_on: 'arwiki'
+                                found_on: 'ruwiki'
                             }
                         }
                     },
@@ -125,7 +125,7 @@ describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
                             name: 'ima',
                             details: {
                                 from: 'commons',
-                                found_on: 'arwiki'
+                                found_on: ''
                             }
                         }
                     }
@@ -149,7 +149,7 @@ describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
                             name: 'ima',
                             details: {
                                 from: 'wikipedia',
-                                found_on: 'arwiki'
+                                found_on: 'ruwiki'
                             }
                         }
                     },
@@ -160,11 +160,23 @@ describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
                             name: 'ima',
                             details: {
                                 from: 'commons',
-                                found_on: 'arwiki'
+                                found_on: ''
                             }
                         }
                     }
                 ]
+            });
+        });
+    });
+
+    it('Should filter out pages with no suggestions (ima)', () => {
+        return suggestions.getPages({ params: { wiki: 'wikipedia', lang: 'ar' }, query: { seed: 101, source: 'ima', offset: 0, limit: 5 } }).then((results) => {
+            assert.deepEqual(results.pages.length, 5);
+            results.pages.forEach((page) => {
+                assert.isAbove(page.suggestions.length, 0);
+                page.suggestions.forEach((suggestion) => {
+                    assert.propertyVal(suggestion.source, 'name', 'ima');
+                });
             });
         });
     });

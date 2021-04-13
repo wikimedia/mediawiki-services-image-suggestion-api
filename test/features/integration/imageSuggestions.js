@@ -34,7 +34,7 @@ describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
                             name: 'ima',
                             details: {
                                 from: 'wikipedia',
-                                found_on: 'arwiki'
+                                found_on: 'ruwiki'
                             }
                         }
                     },
@@ -45,7 +45,7 @@ describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
                             name: 'ima',
                             details: {
                                 from: 'commons',
-                                found_on: 'arwiki'
+                                found_on: ''
                             }
                         }
                     }
