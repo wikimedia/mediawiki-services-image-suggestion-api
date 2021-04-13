@@ -142,6 +142,8 @@ components:
       properties:
         from:
           type: string
+        found_on:
+          type: string
       description: |
         further details about a "suggestion" block. Fields may vary by suggestion type.
   parameters:

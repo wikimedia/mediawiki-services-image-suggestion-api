@@ -1,7 +1,7 @@
 page_id	page_title	image_id	confidence_rating	source	dataset_id	insertion_ts	wiki	found_on
 1	Page One	Page 1 Image 1.png	medium	wikipedia	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki	ruwiki
 1	Page One	Page 1 Image 2.png	high	commons	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki	
-2	Page Two	Page 2 or 3 Image 1.svg	high	commons	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki	
+2	Page Two	Page 2 or 3 Image 1.svg	high	commons	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki	NULL
 3	Page Three	Page 2 or 3 Image 1.svg	low	wikidata	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki	
 4	Page Four	Page 4 Image 1.jpg	medium	wikipedia	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki	
 4	Page Four	Page 4 or 5 Image 2.jpg	high	commons	8488c8bd-9746-4eff-acea-ee495865cc05	1.61436954E9	arwiki	

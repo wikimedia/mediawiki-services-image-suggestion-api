@@ -113,7 +113,8 @@ describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
                         source: {
                             name: 'ima',
                             details: {
-                                from: 'wikipedia'
+                                from: 'wikipedia',
+                                found_on: 'arwiki'
                             }
                         }
                     },
@@ -123,7 +124,8 @@ describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
                         source: {
                             name: 'ima',
                             details: {
-                                from: 'commons'
+                                from: 'commons',
+                                found_on: 'arwiki'
                             }
                         }
                     }
@@ -146,7 +148,8 @@ describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
                         source: {
                             name: 'ima',
                             details: {
-                                from: 'wikipedia'
+                                from: 'wikipedia',
+                                found_on: 'arwiki'
                             }
                         }
                     },
@@ -156,7 +159,8 @@ describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
                         source: {
                             name: 'ima',
                             details: {
-                                from: 'commons'
+                                from: 'commons',
+                                found_on: 'arwiki'
                             }
                         }
                     }
