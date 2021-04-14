@@ -86,8 +86,13 @@ describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
         return preq.get({
             uri: `${server.config.uri}image-suggestions/v0/wikipedia/ar/pages`
         }).then((res) => {
+            // Without parameters, we get truly random pages, so we are limited in
+            // what we can check.
+            // @todo: maybe do additional mocking so we have more to check?
             assert.deepEqual(res.status, 200);
-            assert.lengthOf(res.body.pages, 10);
+            assert.isObject(res);
+            assert.property(res.body, 'seed');
+            assert.property(res.body, 'pages');
         });
     });
 

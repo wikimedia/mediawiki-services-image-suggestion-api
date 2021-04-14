@@ -75,13 +75,12 @@ describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
     it('Should accept source query param (ms)', () => {
         // @todo: actually return mocked ms results and confirm they are as expected.
         return suggestions.getPages({ params: { wiki: 'wikipedia', lang: 'ar' }, query: { seed: 0, source: 'ms' } }).then((results) => {
-            assert.deepEqual(results.pages.length, 10);
-            results.pages.forEach((page) => {
-                // For now, just confirm there are no suggestions (there won't be any ima suggestions
-                // because we're only allowing ms results, and we're forcing ms results to empty).
-                // @todo: improve this once we mock ms results.
-                assert.lengthOf(page.suggestions, 0);
-            });
+            // There won't be any ima suggestions because we're only allowing ms results, and
+            // there won't be any ms results because we've mocked them to empty. So just check
+            // return code and response structure.
+            // @todo: improve this once we mock ms results.
+            assert.deepEqual(results.seed, 0);
+            assert.deepEqual(results.pages.length, 0);
         });
     });
 
