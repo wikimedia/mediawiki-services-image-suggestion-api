@@ -150,7 +150,7 @@ function initApp(options) {
         } else {
             app.logger.log('info', 'Using existing database file');
             const algoResults = new AlgoResults(database);
-            algoResults.initFromExistingDb(dataPath);
+            algoResults.initFromExistingDb();
         }
     });
     return BBPromise.resolve(app);
