@@ -9,11 +9,6 @@ const suggestions = require('../lib/imageSuggestions');
 const router = sUtil.router();
 
 /**
- * The main application object reported when this module is require()d
- */
-let app;
-
-/**
  * TODO: Implement
  * GET /image-suggestions/v0/{wiki}/{lang}/pages/{title}
  * Gets image suggestions for an individual page
@@ -32,11 +27,7 @@ router.get('/:wiki/:lang/pages', async (req, res, next) => {
     }
 });
 
-module.exports = (appObj) => {
-    // TODO: Remove once routes are implemented
-    // eslint-disable-next-line no-unused-vars
-    app = appObj;
-
+module.exports = () => {
     // the returned object mounts the routes on
     // /{domain}/vX/mount/path
     return {
