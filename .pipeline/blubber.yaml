@@ -15,7 +15,7 @@ variants:
   development:
     includes: [build]
     apt: { packages: [ca-certificates] }
-    entrypoint: [node, server.js]
+    entrypoint: [npm, start]
   test:
     includes: [build]
     apt: { packages: [ca-certificates] }
@@ -27,4 +27,4 @@ variants:
   production:
     copies: [prep]
     node: { env: production }
-    entrypoint: [node, server.js]
+    entrypoint: [npm, start]

@@ -65,6 +65,19 @@ The API is publicly accessible at image-suggestion-api.toolforge.org. To deploy 
 	webservice --backend=kubernetes node10 restart
 	```
 
+### Docker
+This project uses [Blubber](https://wikitech.wikimedia.org/wiki/Blubber) for local Docker development and CI.
+
+To build and start the API inside a Docker container for local development, execute:
+```
+blubber .pipeline/blubber.yaml development | docker build --tag img-sugg-api --file - .
+```
+```
+docker run -p 127.0.0.1:8000:8000 img-sugg-api
+```
+
+You can now reach the API on `localhost:8000`
+
 ### API Documentation
 
 The API documentation adheres to [OpenAPI](https://swagger.io/specification/) standards and lives in `spec.yaml`. It is viewable at `https://image-suggestion-api.toolforge.org/?doc`.
