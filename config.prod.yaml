@@ -5,22 +5,21 @@ num_workers: ncpu
 
 # Log error messages and gracefully restart a worker if v8 reports that it
 # uses more heap (note: not RSS) than this many mb.
-worker_heap_limit_mb: 3000
+worker_heap_limit_mb: 500
 
 # Logger info
 logging:
-  level: warn
-  streams:
-  # Use gelf-stream -> logstash
-  - type: gelf
-    host: logstash1003.eqiad.wmnet
-    port: 12201
+  level: info
+  # streams:
+  # # Use gelf-stream -> logstash
+  # - type: gelf
+  #   host: logstash1003.eqiad.wmnet
+  #   port: 12201
 
 # Statsd metrics reporter
-metrics:
-  type: statsd
-  host: statsd.eqiad.wmnet
-  port: 8125
+# metrics:
+#   - type: prometheus
+#     port: 9102
 
 services:
   - name: image-suggestion-api
@@ -30,7 +29,7 @@ services:
     # version: ^0.4.0
     # per-service config
     conf:
-      port: 6927
+      port: 8000
       # interface: localhost # uncomment to only listen on localhost
       # more per-service config settings
       # the location of the spec, defaults to spec.yaml if not specified
