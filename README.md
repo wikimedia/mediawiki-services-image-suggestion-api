@@ -41,28 +41,26 @@ npm run-script coverage
 
 ### Deployments
 
-The API is publicly accessible at image-suggestion-api.toolforge.org. To deploy new versions of the API to the toolforge instance:
+The API is publicly accessible at https://image-suggestion-api.wmcloud.org. To deploy new versions of the API to the CloudVPS instance:
 
-1. Request to become a maintainer for `image-suggestion-api` on `toolsadmin.wikimedia.org`.
-2. Login to the toolforge instance and become the tool account
-	```
-	ssh login.toolforge.org
-	```
-	```
-	become image-suggestion-api
-	```
+1. Request to become a maintainer for the `image-suggestion-api` project by reaching out to Bill Pirkle or Nikki Nikkhoui on the Platform Engineering Team. 
 
-3. Pull the latest code:
+2. Login to the instance
 	```
-	cd /www/js/
+	ssh image-sugg-api.image-suggestion-api.eqiad1.wikimedia.cloud
 	```
+3. Pull the latest code on master:
 	```
+	cd image-suggestion-api
 	git pull
 	```
 
-4. Restart the service
+4. Stop and restart the app via `screen`
 	```
-	webservice --backend=kubernetes node10 restart
+	killall screen
+	screen
+	cd image-suggestion-api
+	npm start
 	```
 
 ### Docker
@@ -80,5 +78,4 @@ You can now reach the API on `localhost:8000`
 
 ### API Documentation
 
-The API documentation adheres to [OpenAPI](https://swagger.io/specification/) standards and lives in `spec.yaml`. It is viewable at `https://image-suggestion-api.toolforge.org/?doc`.
-
+The API documentation adheres to [OpenAPI](https://swagger.io/specification/) standards and lives in `spec.yaml`. It is viewable at `https://image-suggestion-api.wmcloud.org/?doc`.

@@ -77,3 +77,6 @@ services:
         query: '{{ default(request.query, {}) }}'
         headers: '{{request.headers}}'
         body: '{{request.body}}'
+    redirect:
+      to: https://image-suggestion-api.wmcloud.org
+      from: https://image-suggestion-api.toolforge.org
