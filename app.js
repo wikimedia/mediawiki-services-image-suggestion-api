@@ -101,7 +101,7 @@ function initApp(options) {
     app.all('*', (req, res, next) => {
         // Redirect all traffic to specified url if config has redirect_url specified
         if (app.conf.redirect && req.headers.host === app.conf.redirect.from) {
-            res.redirect(301, `${app.conf.redirect.to}${req.url}`);
+            res.redirect(301, `${req.protocol}://${app.conf.redirect.to}${req.url}`);
             return;
         }
         if (app.conf.cors !== false) {

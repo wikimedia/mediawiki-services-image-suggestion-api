@@ -65,7 +65,7 @@ services:
       # the template used for contacting the MW API
       mwapi_req:
         method: post
-        uri: http://api.svc.eqiad.wmnet/w/api.php
+        uri: https://{{domain}}/w/api.php
         headers:
           host: '{{request.params.domain}}'
           user-agent: '{{user-agent}}'
@@ -77,6 +77,6 @@ services:
         query: '{{ default(request.query, {}) }}'
         headers: '{{request.headers}}'
         body: '{{request.body}}'
-    redirect:
-      to: https://image-suggestion-api.wmcloud.org
-      from: https://image-suggestion-api.toolforge.org
+      redirect:
+        to: image-suggestion-api.wmcloud.org
+        from: image-suggestion-api.toolforge.org
