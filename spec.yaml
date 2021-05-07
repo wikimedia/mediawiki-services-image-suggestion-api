@@ -57,6 +57,7 @@ paths:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/offset"
         - $ref: "#/components/parameters/source"
+        - $ref: "#/components/parameters/nofilter"
       responses:
         200:
           description: Success
@@ -179,6 +180,14 @@ components:
         type: string
       description: |
         Retrieve data only from the specified source. Ex: `ima` (Image Matching Algorithm) or `ms` (MediaSearch)
+    nofilter:
+      in: query
+      name: nofilter
+      required: false
+      schema:
+        type: string
+      description: |
+        Whether to filter pages with no suggestions out of the response. `false` (or omitted) to filter, `true` to not filter
     domain:
       in: path
       name: domain
