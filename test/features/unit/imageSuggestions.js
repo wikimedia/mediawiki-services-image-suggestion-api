@@ -98,6 +98,18 @@ describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
         });
     });
 
+    it('Should accept nofilter query param', () => {
+        // @todo: actually return mocked ms results and confirm they are as expected.
+        return suggestions.getPages({ params: { wiki: 'wikipedia', lang: 'ar' }, query: { seed: 0, source: 'ms', noFilter: 'true' } }).then((results) => {
+            // There won't be any ima suggestions because we're only allowing ms results, and
+            // there won't be any ms results because we've mocked them to empty. So just check
+            // return code and response structure.
+            // @todo: improve this once we mock ms results.
+            assert.deepEqual(results.seed, 0);
+            assert.deepEqual(results.pages.length, 10);
+        });
+    });
+
     it('Should have a response with the proper schema', () => {
         return suggestions.getPages({ params: { wiki: 'wikipedia', lang: 'ar' }, query: { seed: 0 } }, './test/fixtures').then((response) => {
             assert.isObject(response);
