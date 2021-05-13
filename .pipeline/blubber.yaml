@@ -9,8 +9,10 @@ variants:
   build:
     base: docker-registry.wikimedia.org/buster-nodejs10-devel
     copies: [local]
-    apt: { packages: [git, build-essential, python-pkgconfig] }
-    node: { requirements: [package.json] }
+    apt: { packages: [git, build-essential, python-pkgconfig, curl] }
+    node: { requirements: [package.json, static/] }
+    builder:
+      command: [curl,"https://image-suggestion-api.wmcloud.org/static/database.db", -o, "./static/database.db"]
     runs: { environment: { LINK: g++ } }
   development:
     includes: [build]
