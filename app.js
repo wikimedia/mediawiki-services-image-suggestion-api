@@ -15,6 +15,22 @@ const path = require('path');
 const database = require('./lib/database/database');
 const AlgoResults = require('./lib/algoResults');
 
+async function loadDatabase(dataPath, app) {
+    const databaseExists = database.exists(`${dataPath}/database.db`);
+    return database.start(`${dataPath}/database.db`).then(() => {
+        const algoResults = new AlgoResults(database);
+        if (!databaseExists) {
+            app.logger.log('info', 'Beginning to populate database');
+            // start up in-memory database and create tables
+            database.init(dataPath);
+            return algoResults.populateDatabase(dataPath);
+        } else {
+            app.logger.log('info', 'Using existing database file');
+            return algoResults.initFromExistingDb();
+        }
+    });
+}
+
 /**
  * Creates an express app and initialises it
  *
@@ -142,23 +158,10 @@ function initApp(options) {
         dataPath = './static';
     }
 
-    const databaseExists = database.exists(`${dataPath}/database.db`);
-    database.start(`${dataPath}/database.db`).then(() => {
-        if (!databaseExists) {
-            app.logger.log('info', 'Beginning to populate database');
-             // start up in-memory database and create tables
-            database.init(dataPath);
-            const algoResults = new AlgoResults(database);
-            algoResults.populateDatabase(dataPath).then(() => {
-                app.logger.log('info', 'Finished populating database');
-            });
-        } else {
-            app.logger.log('info', 'Using existing database file');
-            const algoResults = new AlgoResults(database);
-            algoResults.initFromExistingDb();
-        }
+    return loadDatabase(dataPath, app).then(() => {
+        app.logger.log('info', 'Finished populating database');
+        return BBPromise.resolve(app);
     });
-    return BBPromise.resolve(app);
 }
 
 /**
