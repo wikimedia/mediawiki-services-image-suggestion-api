@@ -1,0 +1,12 @@
+pipelines:
+  test:
+    stages:
+      - name: test
+  production:
+    stages:
+      - name: production
+        build: production
+        publish:
+          image: true
+        promote:
+          - chart: image-suggestion-api
