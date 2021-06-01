@@ -116,7 +116,8 @@ function initApp(options) {
     // set the CORS and CSP headers
     app.all('*', (req, res, next) => {
         // Redirect all traffic to specified url if config has redirect_url specified
-        if (app.conf.redirect && req.headers.host === app.conf.redirect.from) {
+        if (app.conf.redirect && app.conf.redirect.from &&
+            req.headers.host === app.conf.redirect.from) {
             res.redirect(301, `${req.protocol}://${app.conf.redirect.to}${req.url}`);
             return;
         }
