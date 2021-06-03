@@ -1,14 +1,27 @@
 pipelines:
   test:
     blubberfile: blubber.yaml
-    stages:
+    stages: # run API tests
       - name: test
-  production:
+  rehearse: 
     blubberfile: blubber.yaml
     stages:
-      - name: production
+      - name: test # run API tests 
+      - name: candidate # build Docker image and publish to WMF registry
         build: production
         publish:
           image: true
+      - name: rehearsal # deploy to staging cluster
+        deploy:
+          chart:
+            name: 'image-suggestion-api'
+  publish:
+    blubberfile: blubber.yaml
+    stages:
+      - name: candidate # build Docker image and publish to WMF registry
+        build: production
+        publish:
+          image: true
+      - name: production # open patch to upgrade image version in helm chart
         promote:
           - chart: image-suggestion-api
