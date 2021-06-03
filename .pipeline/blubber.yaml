@@ -26,6 +26,7 @@ variants:
     runs: { insecurely: true }
   prep:
     includes: [build]
+    apt: { packages: [ca-certificates] }
     node: { env: production }
   production:
     copies: [prep]
