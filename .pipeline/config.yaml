@@ -1,8 +1,10 @@
 pipelines:
   test:
+    blubberfile: blubber.yaml
     stages:
       - name: test
   production:
+    blubberfile: blubber.yaml
     stages:
       - name: production
         build: production
