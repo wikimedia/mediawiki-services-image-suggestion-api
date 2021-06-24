@@ -9,14 +9,12 @@ const suggestions = require('../lib/imageSuggestions');
 const router = sUtil.router();
 
 /**
- * TODO: Implement
- * GET /image-suggestions/v0/{wiki}/{lang}/pages/{title}
- * Gets image suggestions for an individual page
- */
-
-/**
  * GET /image-suggestions/v0/{wiki}/{lang}/pages
+ *
  * Gets under-illustrated pages and their image suggestions
+ * If page ids are provided, suggestions for those pages are
+ * returned. If page ids are not provided, suggestions are
+ * returned for a random set of pages.
  */
 router.get('/:wiki/:lang/pages', async (req, res, next) => {
     try {

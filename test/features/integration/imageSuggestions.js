@@ -16,7 +16,7 @@ describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
     beforeEach(() => mocks.mockMwApiGet());
     afterEach(() => mocks.restoreAll());
 
-    it('Should return success', () => {
+    it('Should return success for a set of pseudorandom pages', () => {
         return preq.get({
             uri: `${server.config.uri}image-suggestions/v0/wikipedia/ar/pages?seed=0`
         }).then((res) => {
@@ -25,6 +25,7 @@ describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
             // assert.lengthOf(res.body, 10); // dont depend on MS results
             assert.deepEqual(res.body.pages[0], {
                 page: 'Page One',
+                page_id: 1,
                 project: 'arwiki',
                 suggestions: [
                     {
@@ -34,7 +35,8 @@ describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
                             name: 'ima',
                             details: {
                                 from: 'wikipedia',
-                                found_on: 'ruwiki'
+                                found_on: 'ruwiki',
+                                dataset_id: '8488c8bd-9746-4eff-acea-ee495865cc05'
                             }
                         }
                     },
@@ -45,7 +47,105 @@ describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
                             name: 'ima',
                             details: {
                                 from: 'commons',
-                                found_on: ''
+                                found_on: '',
+                                dataset_id: '8488c8bd-9746-4eff-acea-ee495865cc05'
+                            }
+                        }
+                    }
+                ]
+            });
+        });
+    });
+
+    it('Should return success for a specific page', () => {
+        return preq.get({
+            uri: `${server.config.uri}image-suggestions/v0/wikipedia/ar/pages?id=1`
+        }).then((res) => {
+            assert.deepEqual(res.status, 200);
+            assert.deepEqual(res.body.pages[0], {
+                page: 'Page One',
+                page_id: 1,
+                project: 'arwiki',
+                suggestions: [
+                    {
+                        filename: 'Page 1 Image 1.png',
+                        confidence_rating: 'medium',
+                        source: {
+                            name: 'ima',
+                            details: {
+                                from: 'wikipedia',
+                                found_on: 'ruwiki',
+                                dataset_id: '8488c8bd-9746-4eff-acea-ee495865cc05'
+                            }
+                        }
+                    },
+                    {
+                        filename: 'Page 1 Image 2.png',
+                        confidence_rating: 'high',
+                        source: {
+                            name: 'ima',
+                            details: {
+                                from: 'commons',
+                                found_on: '',
+                                dataset_id: '8488c8bd-9746-4eff-acea-ee495865cc05'
+                            }
+                        }
+                    }
+                ]
+            });
+        });
+    });
+
+    it('Should return success for a set of specific pages', () => {
+        return preq.get({
+            uri: `${server.config.uri}image-suggestions/v0/wikipedia/ar/pages?id=1,2`
+        }).then((res) => {
+            assert.deepEqual(res.status, 200);
+            assert.deepEqual(res.body.pages[0], {
+                page: 'Page One',
+                page_id: 1,
+                project: 'arwiki',
+                suggestions: [
+                    {
+                        filename: 'Page 1 Image 1.png',
+                        confidence_rating: 'medium',
+                        source: {
+                            name: 'ima',
+                            details: {
+                                from: 'wikipedia',
+                                found_on: 'ruwiki',
+                                dataset_id: '8488c8bd-9746-4eff-acea-ee495865cc05'
+                            }
+                        }
+                    },
+                    {
+                        filename: 'Page 1 Image 2.png',
+                        confidence_rating: 'high',
+                        source: {
+                            name: 'ima',
+                            details: {
+                                from: 'commons',
+                                found_on: '',
+                                dataset_id: '8488c8bd-9746-4eff-acea-ee495865cc05'
+                            }
+                        }
+                    }
+                ]
+            });
+            assert.deepEqual(res.body.pages[1], {
+                page: 'Page Two',
+                page_id: 2,
+                project: 'arwiki',
+                suggestions: [
+                    {
+                        filename: 'Page 2 or 3 Image 1.svg',
+                        confidence_rating: 'high',
+                        source: {
+                            name: 'ima',
+                            details: {
+                                from: 'commons',
+                                found_on: 'NULL',
+                                dataset_id: '8488c8bd-9746-4eff-acea-ee495865cc05'
                             }
                         }
                     }

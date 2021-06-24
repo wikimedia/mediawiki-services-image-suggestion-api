@@ -49,10 +49,11 @@ paths:
     get:
       tags:
         - Image Suggestions
-      description: Gets image suggestions for multiple under-illustrated pages
+      description: Gets image suggestions for under-illustrated pages
       parameters:
         - $ref: "#/components/parameters/wiki"
         - $ref: "#/components/parameters/lang"
+        - $ref: "#/components/parameters/id"
         - $ref: "#/components/parameters/seed"
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/offset"
@@ -103,9 +104,9 @@ paths:
         - title: Gets image suggestions from the Image Matching Algorithm for under-illustrated pages
           request:
             query:
-              seed: 0
-              limit: 5
-              offset: 0
+              seed: '0'
+              limit: '5'
+              offset: '0'
               source: 'ima'
             params:
               wiki: wikipedia
@@ -145,9 +146,23 @@ components:
           type: string
         found_on:
           type: string
+        dataset_id:
+          type: string
       description: |
         further details about a "suggestion" block. Fields may vary by suggestion type.
   parameters:
+    id:
+      in: query
+      name: id
+      required: false
+      schema:
+        type: array
+        items:
+          type: integer
+      style: form
+      explode: false
+      description: |
+        Comma-separated list of page ids to retrieve suggestions for. If supplied, sending seed, limit, or offset parameters is an error.
     seed:
       in: query
       name: seed
