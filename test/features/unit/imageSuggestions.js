@@ -317,6 +317,24 @@ describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
         });
     });
 
+    it('Should return limit number of row numbers when limit > row count', () => {
+        const limit = 10;
+        const randomNums = suggestions.getPseudoRandomRowNums(5, 2, limit, 2);
+        assert.lengthOf(randomNums, limit);
+    });
+
+    it('Should return limit number of row numbers if limit === row count', () => {
+        const limit = 5;
+        const randomNums = suggestions.getPseudoRandomRowNums(5, 2, limit, 2);
+        assert.lengthOf(randomNums, limit);
+    });
+
+    it('Should return limit number of row numbers when limit < row count', () => {
+        const limit = 5;
+        const randomNums = suggestions.getPseudoRandomRowNums(10, 2, limit, 2);
+        assert.lengthOf(randomNums, limit);
+    });
+
     // Maybe have a test file with the same image for 2 under-illustrated articles
     it('Should return unique suggestions per under-illustrated page', () => {
     });
