@@ -340,6 +340,31 @@ describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
     });
 
     it('Should be capable of returning the same suggestion for two related pages', () => {
+        const commonFilename =  'Page 2 or 3 Image 1.svg';
+        return suggestions.getPages({ params: { wiki: 'wikipedia', lang: 'ar' }, query: { seed: 2 } }).then((results) => {
+            const pageTwo = results.pages[1].suggestions;
+            const pageThree = results.pages[2].suggestions;
+            const foundCommonImg = pageTwo.findIndex((sugg) =>  sugg.filename === commonFilename);
+            const foundCommonImgAgain = pageThree.findIndex((sugg) =>  sugg.filename === commonFilename);
+            assert.lengthOf(pageTwo, 1);
+            assert.lengthOf(pageThree, 1);
+            assert.isAbove(foundCommonImg, -1);
+            assert.isAbove(foundCommonImgAgain, -1);
+        });
+    });
+
+    it('Should be capable of returning the same suggestion for two related pages (ima)', () => {
+        const commonFilename =  'Page 2 or 3 Image 1.svg';
+        return suggestions.getPages({ params: { wiki: 'wikipedia', lang: 'ar' }, query: { source: 'ima' } }).then((results) => {
+            const pageTwo = results.pages[1].suggestions;
+            const pageThree = results.pages[2].suggestions;
+            const foundCommonImg = pageTwo.findIndex((sugg) =>  sugg.filename === commonFilename);
+            const foundCommonImgAgain = pageThree.findIndex((sugg) =>  sugg.filename === commonFilename);
+            assert.lengthOf(pageTwo, 1);
+            assert.lengthOf(pageThree, 1);
+            assert.isAbove(foundCommonImg, -1);
+            assert.isAbove(foundCommonImgAgain, -1);
+        });
     });
 
     it('Should paginate in increments received from query parameter', () => {
