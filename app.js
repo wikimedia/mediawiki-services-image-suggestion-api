@@ -12,10 +12,11 @@ const packageInfo = require('./package.json');
 const yaml = require('js-yaml');
 const addShutdown = require('http-shutdown');
 const path = require('path');
-const database = require('./lib/database/database');
+const Database = require('./lib/database/Database');
 const AlgoResults = require('./lib/algoResults');
 
-async function loadDatabase(dataPath, app) {
+async function loadDatabase(logger, dataPath, app) {
+    const database = new Database(logger);
     const databaseExists = database.exists(`${dataPath}/database.db`);
     return database.start(`${dataPath}/database.db`).then(() => {
         const algoResults = new AlgoResults(database);
@@ -159,7 +160,7 @@ function initApp(options) {
         dataPath = './static';
     }
 
-    return loadDatabase(dataPath, app).then(() => {
+    return loadDatabase(app.logger, dataPath, app).then(() => {
         app.logger.log('info', 'Finished populating database');
         return BBPromise.resolve(app);
     });
