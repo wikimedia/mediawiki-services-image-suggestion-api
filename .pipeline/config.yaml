@@ -13,8 +13,11 @@ pipelines:
           image: true
       - name: rehearsal # deploy to staging cluster
         deploy:
+          test: false
           chart:
             name: 'image-suggestion-api'
+          image: '${candidate.imageName}'
+          tag: '${candidate.imageTag}'
   publish:
     blubberfile: blubber.yaml
     stages:
@@ -23,5 +26,8 @@ pipelines:
         publish:
           image: true
       - name: production # open patch to upgrade image version in helm chart
+        publish:
+          image:
+            id: '${candidate.imageID}'
         promote:
           - chart: image-suggestion-api
