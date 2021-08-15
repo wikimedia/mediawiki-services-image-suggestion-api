@@ -1,6 +1,6 @@
 'use strict';
 
-const AlgoResults = require('../../../lib/algoResults');
+const AlgoResults = require('../../../lib/AlgoResults');
 const assert = require('../../utils/assert');
 const mocks = require('../../utils/mocks');
 

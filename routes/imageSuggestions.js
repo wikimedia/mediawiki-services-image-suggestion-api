@@ -1,12 +1,14 @@
 'use strict';
 
 const sUtil = require('../lib/util');
-const suggestions = require('../lib/imageSuggestions');
+const ImageSuggestions = require('../lib/ImageSuggestions');
 
 /**
  * The main router object
  */
 const router = sUtil.router();
+
+let app;
 
 /**
  * GET /image-suggestions/v0/{wiki}/{lang}/pages
@@ -17,6 +19,7 @@ const router = sUtil.router();
  * returned for a random set of pages.
  */
 router.get('/:wiki/:lang/pages', async (req, res, next) => {
+    const suggestions = new ImageSuggestions(app.logger);
     try {
         const response = await suggestions.getPages(req);
         res.json(response);
@@ -25,9 +28,11 @@ router.get('/:wiki/:lang/pages', async (req, res, next) => {
     }
 });
 
-module.exports = () => {
+module.exports = (appObj) => {
     // the returned object mounts the routes on
     // /{domain}/vX/mount/path
+    app = appObj;
+
     return {
         // TODO: Put v0 in api_version instead and define a domain?
         path: '/image-suggestions/v0',

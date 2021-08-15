@@ -1,6 +1,6 @@
 'use strict';
 
-const mediaSearchResults = require('../../../lib/mediaSearchResults');
+const MediaSearchResults = require('../../../lib/MediaSearchResults');
 const { assert } = require('chai');
 const mocks = require('../../utils/mocks');
 
@@ -14,6 +14,7 @@ describe('MediaSearch Results', function () {
 	});
 
     it('Should return empty results', () => {
+		const mediaSearchResults = new MediaSearchResults();
 		const page = {
 			page: 'frog'
 		};

@@ -13,7 +13,7 @@ const yaml = require('js-yaml');
 const addShutdown = require('http-shutdown');
 const path = require('path');
 const Database = require('./lib/database/Database');
-const AlgoResults = require('./lib/algoResults');
+const AlgoResults = require('./lib/AlgoResults');
 
 async function loadDatabase(logger, dataPath, app) {
     const database = new Database(logger);

@@ -6,7 +6,7 @@
   "main": "./app.js",
   "scripts": {
     "start": "service-runner",
-    "test": "npm run lint && PREQ_CONNECT_TIMEOUT=15 TEST_MODE=true mocha --exit",
+    "test": "npm run lint && rm -f ./test/fixtures/database.db && PREQ_CONNECT_TIMEOUT=15 TEST_MODE=true mocha --exit",
     "lint": "eslint --max-warnings 0 --ext .js --ext .json .",
     "lint:fix": "eslint --fix .",
     "docker-start": "service-runner docker-start",

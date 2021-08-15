@@ -1,11 +1,15 @@
 'use strict';
 
 const assert = require('../../utils/assert');
-const suggestions = require('../../../lib/imageSuggestions');
+const ImageSuggestions = require('../../../lib/ImageSuggestions');
 const { HTTPError } = require('../../../lib/util');
 const mocks = require('../../utils/mocks');
 
 describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
+
+    const mockLogger = {
+        log: () => true
+    };
 
 	beforeEach(() => {
 		mocks.mockMwApiGet();
@@ -16,12 +20,14 @@ describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
 	});
 
     it('Should throw an error if lang or wiki params are invalid', () => {
+        const suggestions = new ImageSuggestions(mockLogger);
         assert.throws(() => {
             suggestions.validateParams({ wiki: 'wikipedia', lang: 'aar' });
         }, HTTPError);
     });
 
     it('Should throw an error if limit param is out of range or invalid', () => {
+        const suggestions = new ImageSuggestions(mockLogger);
         assert.throws(() => {
             suggestions.validateParams({ wiki: 'wikipedia', lang: 'ar' }, { limit: '101' });
         }, HTTPError);
@@ -31,18 +37,21 @@ describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
     });
 
     it('Should throw an error if offset param is out of range or invalid', () => {
+        const suggestions = new ImageSuggestions(mockLogger);
         assert.throws(() => {
             suggestions.validateParams({ wiki: 'wikipedia', lang: 'ar' }, { offset: '-3' });
         }, HTTPError);
     });
 
     it('Should throw an error if source param is invalid', () => {
+        const suggestions = new ImageSuggestions(mockLogger);
         assert.throws(() => {
             suggestions.validateParams({ wiki: 'wikipedia', lang: 'ar' }, { source: 'foo' });
         }, HTTPError);
     });
 
     it('Should throw an error for failing to get MediaSearch results', () => {
+        const suggestions = new ImageSuggestions(mockLogger);
         mocks.restoreAll();
         mocks.mockMwApiGet(new Error());
         return assert.fails(suggestions.getPages({ params: { wiki: 'wikipedia', lang: 'ar' }, query: { seed: '0' } }), (err) => {
@@ -52,41 +61,48 @@ describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
     });
 
     it('Should throw an error if id param is invalid', () => {
+        const suggestions = new ImageSuggestions(mockLogger);
         assert.throws(() => {
             suggestions.validateParams({ wiki: 'wikipedia', lang: 'ar' }, { id: 'foo' }, 0);
         }, HTTPError);
     });
 
     it('Should throw an error if id and seed params are both supplied', () => {
+        const suggestions = new ImageSuggestions(mockLogger);
         assert.throws(() => {
             suggestions.validateParams({ wiki: 'wikipedia', lang: 'ar' }, { id: '1', seed: '2' });
         }, HTTPError);
     });
 
     it('Should throw an error if id and limit params are both supplied', () => {
+        const suggestions = new ImageSuggestions(mockLogger);
         assert.throws(() => {
             suggestions.validateParams({ wiki: 'wikipedia', lang: 'ar' }, { id: '1', limit: '2' }, 0);
         }, HTTPError);
     });
 
     it('Should throw an error if id and offset params are both supplied', () => {
+        const suggestions = new ImageSuggestions(mockLogger);
         assert.throws(() => {
             suggestions.validateParams({ wiki: 'wikipedia', lang: 'ar' }, { id: '1', offset: '2' }, 0);
         }, HTTPError);
     });
 
     it('Should accept limit query param', () => {
+        const suggestions = new ImageSuggestions(mockLogger);
         return suggestions.getPages({ params: { wiki: 'wikipedia', lang: 'ar' }, query: { seed: '0', limit: '3' } }).then((results) => {
             assert.deepEqual(results.pages.length, 3);
         });
     });
 
     it('Should accept offset query params', () => {
+        const suggestions = new ImageSuggestions(mockLogger);
         return suggestions.getPages({ params: { wiki: 'wikipedia', lang: 'ar' }, query: { seed: '0', offset: '2' } }).then((results) => {
             assert.deepEqual(results.pages[0].page, 'Page Three');
         });
     });
     it('Should accept source query param (ima)', () => {
+        const suggestions = new ImageSuggestions(mockLogger);
         return suggestions.getPages({ params: { wiki: 'wikipedia', lang: 'ar' }, query: { seed: '0', source: 'ima' } }).then((results) => {
             assert.deepEqual(results.pages.length, 8);
             results.pages.forEach((page) => {
@@ -97,6 +113,7 @@ describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
         });
     });
     it('Should accept source query param (ms)', () => {
+        const suggestions = new ImageSuggestions(mockLogger);
         // @todo: actually return mocked ms results and confirm they are as expected.
         return suggestions.getPages({ params: { wiki: 'wikipedia', lang: 'ar' }, query: { seed: '0', source: 'ms' } }).then((results) => {
             // There won't be any ima suggestions because we're only allowing ms results, and
@@ -109,6 +126,7 @@ describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
     });
 
     it('Should accept limit, offset, and source query params', () => {
+        const suggestions = new ImageSuggestions(mockLogger);
         return suggestions.getPages(
             { params: { wiki: 'wikipedia', lang: 'ar' }, query: { seed: '0', limit: '2', offset: '3', source: 'ima' }
         }).then((results) => {
@@ -123,6 +141,7 @@ describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
     });
 
     it('Should accept nofilter query param', () => {
+        const suggestions = new ImageSuggestions(mockLogger);
         // @todo: actually return mocked ms results and confirm they are as expected.
         return suggestions.getPages({ params: { wiki: 'wikipedia', lang: 'ar' }, query: { seed: '0', source: 'ms', noFilter: 'true' } }).then((results) => {
             // There won't be any ima suggestions because we're only allowing ms results, and
@@ -135,6 +154,7 @@ describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
     });
 
     it('Should have a response with the proper schema', () => {
+        const suggestions = new ImageSuggestions(mockLogger);
         return suggestions.getPages({ params: { wiki: 'wikipedia', lang: 'ar' }, query: { seed: '0' } }, './test/fixtures').then((response) => {
             assert.isObject(response);
             assert.isArray(response.pages);
@@ -173,6 +193,7 @@ describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
     });
 
     it('Should accept a seed parameter and return the expected result', () => {
+        const suggestions = new ImageSuggestions(mockLogger);
         return suggestions.getPages({ params: { wiki: 'wikipedia', lang: 'ar' }, query: { seed: '123456' } }, './test/fixtures').then((response) => {
             assert.isObject(response);
             assert.isArray(response.pages);
@@ -211,6 +232,7 @@ describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
     });
 
     it('Should accept an id parameter representing one page and return the expected result', () => {
+        const suggestions = new ImageSuggestions(mockLogger);
         return suggestions.getPages({ params: { wiki: 'wikipedia', lang: 'ar' }, query: { id: '1' } }, './test/fixtures').then((response) => {
             assert.isObject(response);
             assert.isArray(response.pages);
@@ -249,6 +271,7 @@ describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
     });
 
     it('Should accept an id parameter representing multiple pages and return the expected result', () => {
+        const suggestions = new ImageSuggestions(mockLogger);
         return suggestions.getPages({ params: { wiki: 'wikipedia', lang: 'ar' }, query: { id: '1,2' } }, './test/fixtures').then((response) => {
             assert.isObject(response);
             assert.isArray(response.pages);
@@ -306,6 +329,7 @@ describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
     });
 
     it('Should filter out pages with no suggestions (ima)', () => {
+        const suggestions = new ImageSuggestions(mockLogger);
         return suggestions.getPages({ params: { wiki: 'wikipedia', lang: 'ar' }, query: { seed: '101', source: 'ima', offset: 0, limit: 5 } }).then((results) => {
             assert.deepEqual(results.pages.length, 5);
             results.pages.forEach((page) => {
@@ -318,18 +342,21 @@ describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
     });
 
     it('Should return limit number of row numbers when limit > row count', () => {
+        const suggestions = new ImageSuggestions(mockLogger);
         const limit = 10;
         const randomNums = suggestions.getPseudoRandomRowNums(5, 2, limit, 2);
         assert.lengthOf(randomNums, limit);
     });
 
     it('Should return limit number of row numbers if limit === row count', () => {
+        const suggestions = new ImageSuggestions(mockLogger);
         const limit = 5;
         const randomNums = suggestions.getPseudoRandomRowNums(5, 2, limit, 2);
         assert.lengthOf(randomNums, limit);
     });
 
     it('Should return limit number of row numbers when limit < row count', () => {
+        const suggestions = new ImageSuggestions(mockLogger);
         const limit = 5;
         const randomNums = suggestions.getPseudoRandomRowNums(10, 2, limit, 2);
         assert.lengthOf(randomNums, limit);
@@ -340,6 +367,7 @@ describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
     });
 
     it('Should be capable of returning the same suggestion for two related pages', () => {
+        const suggestions = new ImageSuggestions(mockLogger);
         const commonFilename =  'Page 2 or 3 Image 1.svg';
         return suggestions.getPages({ params: { wiki: 'wikipedia', lang: 'ar' }, query: { seed: 2 } }).then((results) => {
             const pageTwo = results.pages[1].suggestions;
@@ -354,6 +382,7 @@ describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
     });
 
     it('Should be capable of returning the same suggestion for two related pages (ima)', () => {
+        const suggestions = new ImageSuggestions(mockLogger);
         const commonFilename =  'Page 2 or 3 Image 1.svg';
         return suggestions.getPages({ params: { wiki: 'wikipedia', lang: 'ar' }, query: { source: 'ima' } }).then((results) => {
             const pageTwo = results.pages[1].suggestions;
