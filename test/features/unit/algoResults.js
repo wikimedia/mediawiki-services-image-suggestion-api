@@ -12,7 +12,10 @@ function getMockDatabase(mockResults = []) {
 			});
 		},
 		insert: () => {
-			return true;
+			return undefined;
+		},
+		insertOrIgnore: () => {
+			return undefined;
 		}
 	};
 	return mockDB;
