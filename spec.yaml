@@ -234,4 +234,4 @@ components:
       schema:
         type: string
       description: |
-        Wiki language abbrevation. Example: `en` or `es`.
+        Wiki language abbrevation. Example: `en` or `es`. Languages currently supported are found in `lib/wikiId.js` in the source code.
