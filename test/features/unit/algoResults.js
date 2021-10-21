@@ -69,7 +69,7 @@ describe('Algo Results', function () {
 	it('Should return expected results', () => {
 		const mockDB = getMockDatabase([
 			{
-				page: 'Page One',
+				page: 'Page_One',
 				project: 'arwiki',
 				suggestions: []
 			}
@@ -82,7 +82,7 @@ describe('Algo Results', function () {
 		};
 		return Promise.resolve(algoResults.queryDBForPages('arwiki', query)).then((results) => {
 			assert.lengthOf(results, 1);
-            assert.deepEqual(results[0].page, 'Page One');
+            assert.deepEqual(results[0].page, 'Page_One');
             assert.deepEqual(results[0].project, 'arwiki');
 			assert.lengthOf(results[0].suggestions, 0);
 		});
@@ -91,7 +91,7 @@ describe('Algo Results', function () {
 	it('Should accept rowNum values', () => {
 		const mockDB = getMockDatabase([
 			{
-				page: 'Page Two',
+				page: 'Page_Two',
 				project: 'arwiki',
 				suggestions: []
 			}
@@ -107,7 +107,7 @@ describe('Algo Results', function () {
 			'arwiki', query, rowNums
 		)).then((results) => {
 			assert.lengthOf(results, 1);
-            assert.deepEqual(results[0].page, 'Page Two');
+            assert.deepEqual(results[0].page, 'Page_Two');
             assert.deepEqual(results[0].project, 'arwiki');
 			assert.lengthOf(results[0].suggestions, 0);
 		});

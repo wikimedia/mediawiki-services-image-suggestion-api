@@ -25,6 +25,15 @@ router.get('/:wiki/:lang/pages', async (req, res, next) => {
     }
 });
 
+router.get('/:wiki/:lang/pages/:title', async (req, res, next) => {
+    try {
+        const response = await suggestions.getPages(req);
+        res.json(response);
+    } catch (err) {
+        res.status(err.status).json(err);
+    }
+});
+
 module.exports = () => {
     // the returned object mounts the routes on
     // /{domain}/vX/mount/path

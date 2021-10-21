@@ -115,6 +115,74 @@ paths:
             status: 200
             headers:
               content-type: application/json
+  # from routes/imageSuggestions.js
+  /image-suggestions/v0/{wiki}/{lang}/pages/{title}:
+    get:
+      tags:
+        - Image Suggestions
+      description: Gets image suggestions for an under-illustrated page
+      parameters:
+        - $ref: "#/components/parameters/wiki"
+        - $ref: "#/components/parameters/lang"
+        - $ref: "#/components/parameters/title"
+        - $ref: "#/components/parameters/source"
+        - $ref: "#/components/parameters/nofilter"
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  seed:
+                    type: integer
+                  pages:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        page:
+                          type: string
+                        project:
+                          type: string
+                        suggestions:
+                          type: array
+                          items:
+                            $ref: "#/components/schemas/suggestion"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/problem"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/problem"
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/problem"
+      x-amples:
+        - title: Gets image suggestions from the Image Matching Algorithm for under-illustrated pages
+          request:
+            query:
+              seed: '0'
+              limit: '5'
+              offset: '0'
+              source: 'ima'
+            params:
+              wiki: wikipedia
+              lang: ar
+          response:
+            status: 200
+            headers:
+              content-type: application/json
 components:
   schemas:
     problem:

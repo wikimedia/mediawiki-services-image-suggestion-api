@@ -57,9 +57,21 @@ describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
         }, HTTPError);
     });
 
+    it('Should throw an error if id and title params are both supplied', () => {
+        assert.throws(() => {
+            suggestions.validateParams({ wiki: 'wikipedia', lang: 'ar', title: 'Page_One' }, { id: '1' });
+        }, HTTPError);
+    });
+
     it('Should throw an error if id and seed params are both supplied', () => {
         assert.throws(() => {
             suggestions.validateParams({ wiki: 'wikipedia', lang: 'ar' }, { id: '1', seed: '2' });
+        }, HTTPError);
+    });
+
+    it('Should throw an error if title and seed params are both supplied', () => {
+        assert.throws(() => {
+            suggestions.validateParams({ wiki: 'wikipedia', lang: 'ar', title: 'Page_One' }, { seed: '2' });
         }, HTTPError);
     });
 
@@ -83,7 +95,7 @@ describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
 
     it('Should accept offset query params', () => {
         return suggestions.getPages({ params: { wiki: 'wikipedia', lang: 'ar' }, query: { seed: '0', offset: '2' } }).then((results) => {
-            assert.deepEqual(results.pages[0].page, 'Page Three');
+            assert.deepEqual(results.pages[0].page, 'Page_Three');
         });
     });
     it('Should accept source query param (ima)', () => {
@@ -112,7 +124,7 @@ describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
         return suggestions.getPages(
             { params: { wiki: 'wikipedia', lang: 'ar' }, query: { seed: '0', limit: '2', offset: '3', source: 'ima' }
         }).then((results) => {
-            assert.deepEqual(results.pages[0].page, 'Page Four');
+            assert.deepEqual(results.pages[0].page, 'Page_Four');
             assert.lengthOf(results.pages, 2);
             results.pages.forEach((page) => {
                 page.suggestions.forEach((suggestion) => {
@@ -140,11 +152,11 @@ describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
             assert.isArray(response.pages);
             assert.deepEqual(response.pages[0], {
                 project: 'arwiki',
-                page: 'Page One',
+                page: 'Page_One',
                 page_id: 1,
                 suggestions: [
                     {
-                        filename: 'Page 1 Image 1.png',
+                        filename: 'Page_1_Image_1.png',
                         confidence_rating: 'medium',
                         source: {
                             name: 'ima',
@@ -156,7 +168,7 @@ describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
                         }
                     },
                     {
-                        filename: 'Page 1 Image 2.png',
+                        filename: 'Page_1_Image_2.png',
                         confidence_rating: 'high',
                         source: {
                             name: 'ima',
@@ -178,11 +190,11 @@ describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
             assert.isArray(response.pages);
             assert.deepEqual(response.pages[0], {
                 project: 'arwiki',
-                page: 'Page One',
+                page: 'Page_One',
                 page_id: 1,
                 suggestions: [
                     {
-                        filename: 'Page 1 Image 1.png',
+                        filename: 'Page_1_Image_1.png',
                         confidence_rating: 'medium',
                         source: {
                             name: 'ima',
@@ -194,7 +206,7 @@ describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
                         }
                     },
                     {
-                        filename: 'Page 1 Image 2.png',
+                        filename: 'Page_1_Image_2.png',
                         confidence_rating: 'high',
                         source: {
                             name: 'ima',
@@ -216,11 +228,11 @@ describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
             assert.isArray(response.pages);
             assert.deepEqual(response.pages[0], {
                 project: 'arwiki',
-                page: 'Page One',
+                page: 'Page_One',
                 page_id: 1,
                 suggestions: [
                     {
-                        filename: 'Page 1 Image 1.png',
+                        filename: 'Page_1_Image_1.png',
                         confidence_rating: 'medium',
                         source: {
                             name: 'ima',
@@ -232,7 +244,7 @@ describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
                         }
                     },
                     {
-                        filename: 'Page 1 Image 2.png',
+                        filename: 'Page_1_Image_2.png',
                         confidence_rating: 'high',
                         source: {
                             name: 'ima',
@@ -254,11 +266,11 @@ describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
             assert.isArray(response.pages);
             assert.deepEqual(response.pages[0], {
                 project: 'arwiki',
-                page: 'Page One',
+                page: 'Page_One',
                 page_id: 1,
                 suggestions: [
                     {
-                        filename: 'Page 1 Image 1.png',
+                        filename: 'Page_1_Image_1.png',
                         confidence_rating: 'medium',
                         source: {
                             name: 'ima',
@@ -270,7 +282,7 @@ describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
                         }
                     },
                     {
-                        filename: 'Page 1 Image 2.png',
+                        filename: 'Page_1_Image_2.png',
                         confidence_rating: 'high',
                         source: {
                             name: 'ima',
@@ -284,18 +296,56 @@ describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
                 ]
             });
             assert.deepEqual(response.pages[1], {
-                page: 'Page Two',
+                page: 'Page_Two',
                 page_id: 2,
                 project: 'arwiki',
                 suggestions: [
                     {
-                        filename: 'Page 2 or 3 Image 1.svg',
+                        filename: 'Page_2_or_3_Image_1.svg',
                         confidence_rating: 'high',
                         source: {
                             name: 'ima',
                             details: {
                                 from: 'commons',
                                 found_on: 'NULL',
+                                dataset_id: '8488c8bd-9746-4eff-acea-ee495865cc05'
+                            }
+                        }
+                    }
+                ]
+            });
+        });
+    });
+
+    it('Should accept a title parameter and return the expected result', () => {
+        return suggestions.getPages({ params: { wiki: 'wikipedia', lang: 'ar', title: 'Page_One' }, query: {} }, './test/fixtures').then((response) => {
+            assert.isObject(response);
+            assert.isArray(response.pages);
+            assert.deepEqual(response.pages[0], {
+                project: 'arwiki',
+                page: 'Page_One',
+                page_id: 1,
+                suggestions: [
+                    {
+                        filename: 'Page_1_Image_1.png',
+                        confidence_rating: 'medium',
+                        source: {
+                            name: 'ima',
+                            details: {
+                                from: 'wikipedia',
+                                found_on: 'ruwiki',
+                                dataset_id: '8488c8bd-9746-4eff-acea-ee495865cc05'
+                            }
+                        }
+                    },
+                    {
+                        filename: 'Page_1_Image_2.png',
+                        confidence_rating: 'high',
+                        source: {
+                            name: 'ima',
+                            details: {
+                                from: 'commons',
+                                found_on: '',
                                 dataset_id: '8488c8bd-9746-4eff-acea-ee495865cc05'
                             }
                         }
@@ -340,7 +390,7 @@ describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
     });
 
     it('Should be capable of returning the same suggestion for two related pages', () => {
-        const commonFilename =  'Page 2 or 3 Image 1.svg';
+        const commonFilename =  'Page_2_or_3_Image_1.svg';
         return suggestions.getPages({ params: { wiki: 'wikipedia', lang: 'ar' }, query: { seed: 2 } }).then((results) => {
             const pageTwo = results.pages[1].suggestions;
             const pageThree = results.pages[2].suggestions;
@@ -354,7 +404,7 @@ describe('GET image-suggestions/v0/{wiki}/{lang}/pages', function () {
     });
 
     it('Should be capable of returning the same suggestion for two related pages (ima)', () => {
-        const commonFilename =  'Page 2 or 3 Image 1.svg';
+        const commonFilename =  'Page_2_or_3_Image_1.svg';
         return suggestions.getPages({ params: { wiki: 'wikipedia', lang: 'ar' }, query: { source: 'ima' } }).then((results) => {
             const pageTwo = results.pages[1].suggestions;
             const pageThree = results.pages[2].suggestions;
