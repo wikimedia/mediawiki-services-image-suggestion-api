@@ -55,12 +55,10 @@ The API is publicly accessible at https://image-suggestion-api.wmcloud.org. To d
 	git pull
 	```
 
-4. Stop and restart the app via `screen`
+4. Restart the systemctl service
+	The API exists as a systemctl service. Restart the API to see your changes.
 	```
-	killall screen
-	screen
-	cd image-suggestion-api
-	npm start
+	sudo systemctl restart image-suggestion-api
 	```
 
 ### Docker
