@@ -25,7 +25,7 @@ routes you may query:
 * `http://localhost:8000/image-suggestions/v0/{lang}/{wiki}/pages:`
 * `http://localhost:8000/image-suggestions/v0/{lang}/{wiki}/pages/{title}:`
 
-### Tests
+## Tests
 
 Tests are written using the [mocha](https://mochajs.org/) framework. To run, simply execute:
 
@@ -39,23 +39,42 @@ To measure test coverage, we use the npm package [nyc](https://www.npmjs.com/pac
 npm run-script coverage
 ```
 
-### Deployments
+## Deployments
 
-The API is publicly accessible at https://image-suggestion-api.wmcloud.org. To deploy new versions of the API to the CloudVPS instance:
+The API is publicly accessible at https://image-suggestion-api.wmcloud.org. To deploy new versions of the API to the CloudVPS instance, you must first be a project admin. You can request access from any of the existing admins (Bill Pirkle, Nikki Nikkhoui, or Wendy Quarshie)
 
-1. Request to become a maintainer for the `image-suggestion-api` project by reaching out to Bill Pirkle or Nikki Nikkhoui on the Platform Engineering Team. 
+### Data Refresh
 
-2. Login to the instance
+The Image Suggestion API uses a static sqlite database file, `/static/database.db` to serve data. On startup, if `database.db` does not already exist, the API generates a new database file from all `.tsv` files in the `/static` directory. If the data ever needs to be refreshed, a new `database.db` must be generated. To do so:
+
+1. Replace any existing files under `/static` directory with the new `.tsv` file(s).
+2. Start the server with `npm start` to begin the database file generation.
+* This may take awhile based on how large your files are/the amount of CPU and memory on your laptop. The API will log its progress as it continues.
+3. Execute the below to copy the new file to the production instance, where {username} is your horizon.wikimedia.org username.
+```
+scp static/database.db {username}@image-sugg-api.image-suggestion-api.eqiad1.wikimedia.cloud:/home/{username}/image-suggestion-api/static/databasenew.db
+```
+
+4. Restart the systemctl service
+```
+	sudo systemctl restart image-suggestion-api
+```
+
+### Source code changes
+
+If you just need to deploy a new version of the API due to source code changes:
+
+1. Login to the instance
 	```
 	ssh image-sugg-api.image-suggestion-api.eqiad1.wikimedia.cloud
 	```
-3. Pull the latest code on master:
+2. Pull the latest code on master:
 	```
 	cd image-suggestion-api
 	git pull
 	```
 
-4. Restart the systemctl service
+3. Restart the systemctl service
 	The API exists as a systemctl service. Restart the API to see your changes.
 	```
 	sudo systemctl restart image-suggestion-api
