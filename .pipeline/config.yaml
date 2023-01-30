@@ -21,13 +21,11 @@ pipelines:
   publish:
     blubberfile: blubber.yaml
     stages:
-      - name: candidate # build Docker image and publish to WMF registry
+      # build Docker image, publish to WMF registry, then create a Gerrit patch
+      # to upgrade image version in helm chart
+      - name: production 
         build: production
         publish:
           image: true
-      - name: production # open patch to upgrade image version in helm chart
-        publish:
-          image:
-            id: '${candidate.imageID}'
         promote:
           - chart: image-suggestion-api
